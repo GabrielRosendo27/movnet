@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.data
 {
-  public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options) {
-       
-        public DbSet<UserModel> Users { get; set; } = null!;
-
+  public class AppDbContext : DbContext 
+  { 
+    public AppDbContext(DbContextOptions options) : base(options){}
+    public DbSet<UserModel> Users { get; set;} = null!;
   }
 }
