@@ -119,7 +119,6 @@ C:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backen
 C:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\obj\Debug\net9.0\backend.pdb
 C:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 C:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\obj\Debug\net9.0\ref\backend.dll
-c:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\obj\Debug\net9.0\backend.sourcelink.json
 c:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.InMemory.dll
 c:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 c:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
