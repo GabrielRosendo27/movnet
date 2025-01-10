@@ -1,0 +1,40 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["dotnet", "ef", "database", "update"]
+    depends_on:
+      - db
+    networks:
+      - movnet-network
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: movnet_user
+      POSTGRES_DB: movnet_db
+      POSTGRES_PASSWORD: mysecretpassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - movnet-network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - movnet-network
+
+networks:
+  movnet-network:
+    driver: bridge
+
+volumes:
+  pgdata:
