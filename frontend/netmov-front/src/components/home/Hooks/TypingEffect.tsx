@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export function TypingEffect() {
-  const fullText = "Addicione, salve e gerencie listas com seus filmes preferidos!";
+  const fullText = "Gerrencie listas com seus filmes preferidos!";
   const [text, setText] = useState(fullText.charAt(0));
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export function TypingEffect() {
       } else {
         clearInterval(interval);
       }
-    }, 38);
+    }, 45);
 
     return () => clearInterval(interval);
   }, [fullText]);
