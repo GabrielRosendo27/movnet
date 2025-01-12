@@ -5,7 +5,10 @@ interface ButtonProps {
 
 export function OrangeButton({ text, onClick }: ButtonProps): React.ReactElement {
   return (
-    <button className="bg-myOrange text-5xl text-white p-3 rounded-md shadow-md transition-transform transform hover:bg-orange-600 hover:scale-105" onClick={onClick}>
+    <button
+      className="bg-myOrange text-xl text-white px-3 py-1 rounded-lg shadow-md transition-transform transform hover:bg-orange-600 hover:scale-105 mt-3"
+      onClick={onClick}
+    >
       {text}
     </button>
   );

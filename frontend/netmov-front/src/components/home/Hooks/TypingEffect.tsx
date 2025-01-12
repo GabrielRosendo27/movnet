@@ -19,5 +19,5 @@ export function TypingEffect() {
     return () => clearInterval(interval);
   }, [fullText]);
 
-  return <div className="text-white text-4xl">{text}</div>;
+  return <div className="text-white text-4xl text-center">{text}</div>;
 }
