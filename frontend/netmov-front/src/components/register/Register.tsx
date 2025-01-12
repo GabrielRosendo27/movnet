@@ -1,35 +1,20 @@
 import { Input } from "../form/Input";
 import { OrangeButton } from "../buttons/OrangeButton";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-const RegisterSchema = z.object({
-  user: z.string().min(2, "O usuário deve ter pelo menos 2 caracteres."),
-  email: z.string().email("E-mail inválido"),
-  password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
-});
-
-type RegisterFormInputs = z.infer<typeof RegisterSchema>;
+import { RegisterFormInputs } from "../validations/registerSchema";
+import { useRegisterForm } from "./hooks/useRegisterForm";
 
 export function Register() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormInputs>({
-    resolver: zodResolver(RegisterSchema),
-  });
+  const navigate = useNavigate();
+  function onClick() {
+    navigate("/login");
+  }
 
   const onSubmit = (data: RegisterFormInputs) => {
     console.log("Usuário registrado:", data);
   };
 
-  const navigate = useNavigate();
-  function onClick() {
-    navigate("/login");
-  }
+  const { register, handleSubmit, errors } = useRegisterForm(onSubmit);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
