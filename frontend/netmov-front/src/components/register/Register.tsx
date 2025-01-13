@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Input } from "../form/Input";
 import { OrangeButton } from "../buttons/OrangeButton";
 import { useNavigate } from "react-router-dom";
 import { RegisterFormInputs } from "../validations/registerSchema";
 import { useRegisterForm } from "./hooks/useRegisterForm";
+import { useFetch } from "../../hooks/useFetch";
 
 export function Register() {
   const navigate = useNavigate();
@@ -10,8 +12,20 @@ export function Register() {
     navigate("/login");
   }
 
-  const onSubmit = (data: RegisterFormInputs) => {
-    console.log("Usuário registrado:", data);
+  const { fetchData, loading, error } = useFetch<{ message: string }>();
+
+  const onSubmit = async (data: RegisterFormInputs) => {
+    try {
+      console.log("Usuário registrado:", data);
+      const response = await fetchData("https://seu-backend/api/register", {
+        method: "POST",
+        body: data,
+      });
+      console.log("Usuário registrado com sucesso:", response);
+      navigate("/login");
+    } catch (err) {
+      console.error("Erro ao registrar usuário", error);
+    }
   };
 
   const { register, handleSubmit, errors } = useRegisterForm(onSubmit);
