@@ -4,30 +4,27 @@ import { OrangeButton } from "../buttons/OrangeButton";
 import { useNavigate } from "react-router-dom";
 import { RegisterFormInputs } from "../validations/registerSchema";
 import { useRegisterForm } from "./hooks/useRegisterForm";
-import { useFetch } from "../../hooks/useFetch";
+import { useRegisterUser } from "./hooks/useRegisterUser";
 
 export function Register() {
   const navigate = useNavigate();
+
   function onClick() {
     navigate("/login");
   }
 
-  const { fetchData, loading, error } = useFetch<{ message: string }>();
-
-  const onSubmit = async (data: RegisterFormInputs) => {
-    try {
-      console.log("Usuário registrado:", data);
-      const response = await fetchData("https://seu-backend/api/register", {
-        method: "POST",
-        body: data,
-      });
-      console.log("Usuário registrado com sucesso:", response);
-      navigate("/login");
-    } catch (err) {
-      console.error("Erro ao registrar usuário", error);
-    }
+  const { mutate, isPending, isError, error } = useRegisterUser();
+  const onSubmit = (data: RegisterFormInputs) => {
+    mutate(data, {
+      onSuccess: (response) => {
+        console.log("Usuário registrado com sucesso:", response.message);
+        navigate("/login");
+      },
+      onError: (err) => {
+        console.log("Erro ao registrar usuário", err.message);
+      },
+    });
   };
-
   const { register, handleSubmit, errors } = useRegisterForm(onSubmit);
 
   return (
@@ -45,6 +42,8 @@ export function Register() {
           <OrangeButton text="Voltar" onClick={onClick} />
           <OrangeButton text="Criar Conta" type="submit" />
         </div>
+        {isError && <span className="text-red-600">Erro ao registrar: {error?.message}</span>}
+        {isPending && <span className="text-green-400">Carregando...</span>}
       </div>
     </form>
   );
