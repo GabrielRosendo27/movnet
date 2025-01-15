@@ -1,10 +1,18 @@
 services:
+  frontend:
+    build:
+      context: ../frontend/netmov-front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    volumes:
+      - ../frontend/netmov-front:/app
   backend:
     build:
-      context: .
+      context: ../backend
       dockerfile: Dockerfile
-    volumes:
-      - .:/app
     working_dir: /app
     command: ["dotnet", "ef", "database", "update"]
     depends_on:

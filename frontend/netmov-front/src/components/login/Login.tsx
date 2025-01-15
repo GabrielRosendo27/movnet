@@ -17,8 +17,8 @@ export function Login() {
       <div className="bg-darkBlue w-screen h-screen flex items-center justify-center flex-col">
         <h1 className="text-white text-4xl mb-4">...</h1>
         <div className="flex flex-col">
-          <Input text="E-mail" />
-          <Input text="Senha" />
+          <Input text="E-mail" type="text" />
+          <Input text="Senha" type="password" />
           <OrangeButton text="Entrar" />
           <div className="flex gap-5">
             <OrangeButton text="Voltar" onClick={() => onClick("home")} />
