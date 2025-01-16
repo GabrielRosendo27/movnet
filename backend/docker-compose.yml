@@ -19,7 +19,8 @@ services:
       - db
     networks:
       - movnet-network
-
+    ports:
+      - "5000:5000"
   db:
     image: postgres
     restart: always
