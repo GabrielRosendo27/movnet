@@ -5,7 +5,7 @@ namespace backend.controllers
 {
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class UserController : ControllerBase
   {
       private readonly AppDbContext _context;  
@@ -15,6 +15,7 @@ public class UserController : ControllerBase
       }
 
       [HttpGet]
+      
       public ActionResult<List<UserModel>> SearchUsers(){
         var users = _context.Users.ToList();
         return Ok(users);

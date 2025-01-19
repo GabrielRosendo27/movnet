@@ -11,7 +11,7 @@ export interface RegisterResponse {
 }
 
 const registerUser = async (data: RegisterUserPayload): Promise<RegisterResponse> => {
-  const response = await fetch("http://backend:5000/api/User", {
+  const response = await fetch("http://localhost:5000/User", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

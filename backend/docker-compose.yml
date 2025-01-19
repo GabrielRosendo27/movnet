@@ -14,13 +14,14 @@ services:
       context: ../backend
       dockerfile: Dockerfile
     working_dir: /app
-    command: ["dotnet", "ef", "database", "update"]
+    command: >
+      sh -c "dotnet ef database update && dotnet backend.dll"
     depends_on:
       - db
     networks:
       - movnet-network
     ports:
-      - "5000:5000"
+      - "5000:8080"
   db:
     image: postgres
     restart: always
