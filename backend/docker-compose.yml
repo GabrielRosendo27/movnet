@@ -22,6 +22,8 @@ services:
       - movnet-network
     ports:
       - "5000:8080"
+    volumes:
+      - ./data-protection:/app/keys
   db:
     image: postgres
     restart: always

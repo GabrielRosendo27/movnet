@@ -46,7 +46,8 @@ public class UserController : ControllerBase
           new Claim(JwtRegisteredClaimNames.Sub, foundUser.Email),
           new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("chave-secreta-super-segura"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sua-chave-secreta-super-segura-de-32-caracteres"));
+
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
@@ -57,7 +58,7 @@ public class UserController : ControllerBase
           signingCredentials: creds
       );
       var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-      return Ok(new { Token = tokenString });
+      return Ok(new { token = tokenString });
       }
         
   }

@@ -7,7 +7,7 @@ interface LoginData {
   password: string;
 }
 interface LoginResponse {
-  Token: string;
+  token: string;
 }
 export function useLoginUser() {
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +32,7 @@ export function useLoginUser() {
   const mutation = useMutation<LoginResponse, Error, LoginData>({
     mutationFn: loginRequest,
     onSuccess: (data) => {
-      const token = data.Token;
+      const token = data.token;
       localStorage.setItem("authToken", token);
       navigate("/");
     },

@@ -1,14 +1,17 @@
 using System.Text;
 using backend.data;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddDbContext<AppDbContext>
 (opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddSwaggerGen(
@@ -23,7 +26,7 @@ builder.Services.AddSwaggerGen(
 builder.Services.AddCors(options => 
 {
     options.AddPolicy("AllowAll", policy => {
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
     });
 });
 
@@ -35,12 +38,15 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>{
             ValidateIssuerSigningKey = true,
             ValidIssuer = "sua-aplicacao",
             ValidAudience = "seus-usuarios",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("chave-secreta-super-segura"))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sua-chave-secreta-super-segura-de-32-caracteres"))
     };
 });
+    builder.Services.AddDataProtection()
+        .PersistKeysToFileSystem(new DirectoryInfo("/app/keys"))
+        .SetApplicationName("NetMov");
+
 
 var app = builder.Build();
-app.UseCors("AllowAll");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -52,8 +58,9 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = string.Empty;
     });
 }
-app.UseAuthentication();
 app.UseHttpsRedirection();
+app.UseCors("AllowAll");
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
