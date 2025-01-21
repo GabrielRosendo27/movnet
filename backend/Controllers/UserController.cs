@@ -1,6 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using backend.data;
 using backend.models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 namespace backend.controllers
 {
 
@@ -17,28 +21,44 @@ public class UserController : ControllerBase
       [HttpGet]
       
       public ActionResult<List<UserModel>> SearchUsers(){
-        var users = _context.Users.ToList();
+        var users = _context.Users.Take(1).ToList();
         return Ok(users);
       }
       
       [HttpPost]
       public async Task<ActionResult<UserModel>> RegisterUser(UserModel user){
+        user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(SearchUsers), new {id = user.Id}, user);
       }
+      
       [HttpPost("login")]
       public ActionResult<string> Login(UserModel user){
-        if(string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password)){
-          return BadRequest("Email ou senha são nulos.");
+        var foundUser = _context.Users.FirstOrDefault(u => u.Email == user.Email);
+        if(foundUser == null || !BCrypt.Net.BCrypt.Verify(user.Password, foundUser.Password)) { 
+          return Unauthorized("E-mail ou senha inválidos."); 
         }
-        var foundUser = _context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
 
-        if(foundUser == null){
-          return Unauthorized("E-mail ou senha inválidos.");
-        }
-        return Ok(foundUser.User);
+        // Token Creation
 
+        var claims = new[]{
+          new Claim(JwtRegisteredClaimNames.Sub, foundUser.Email),
+          new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("chave-secreta-super-segura"));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+          issuer: "sua-aplicacao",
+          audience: "seus-usuarios",
+          claims: claims,
+          expires: DateTime.Now.AddHours(2),
+          signingCredentials: creds
+      );
+      var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+      return Ok(new { Token = tokenString });
       }
+        
   }
 }
