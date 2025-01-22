@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yZr/jqzkSZg=",
+  "dgSpecHash": "qYA18d3waBc=",
   "success": true,
-  "projectFilePath": "c:\\Users\\Pichau\\Documents\\Arquivos\\Programacao\\Apps\\projetos novos\\netmov\\backend\\backend.csproj",
+  "projectFilePath": "C:\\Users\\Pichau\\Documents\\Arquivos\\Programacao\\Apps\\projetos novos\\netmov\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Pichau\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Pichau\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

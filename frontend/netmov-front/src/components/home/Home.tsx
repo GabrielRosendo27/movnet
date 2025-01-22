@@ -9,9 +9,8 @@ export function Home() {
   }
 
   return (
-    <div className="bg-darkBlue w-screen h-screen flex items-center justify-center">
+    <div className="bg-darkGradient w-screen h-screen flex items-center justify-center">
       <div className="container flex flex-col items-center justify-center">
-        <h1 className="text-8xl text-white mb-2">...</h1>
         <TypingEffect />
         <div className="mt-6">
           <OrangeButton onClick={onClick} text="Começar" />
