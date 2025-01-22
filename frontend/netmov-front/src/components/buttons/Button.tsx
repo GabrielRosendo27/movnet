@@ -3,12 +3,13 @@ interface ButtonProps {
   text: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  className?: string;
 }
 
-export function OrangeButton({ text, onClick, type = "button", disabled }: ButtonProps): React.ReactElement {
+export function Button({ text, onClick, type = "button", disabled, className = "" }: ButtonProps): React.ReactElement {
   return (
     <button
-      className="bg-myOrange text-xl text-white px-3 py-1 rounded-lg shadow-md transition-transform transform hover:bg-orange-600 hover:scale-105 mt-3"
+      className={`bg-myPurple text-xl text-white px-8 py-4 rounded-md shadow-md transition-colors duration-500 hover:bg-indigo-800 mt-3 ${className}`}
       onClick={onClick}
       type={type}
       disabled={disabled}

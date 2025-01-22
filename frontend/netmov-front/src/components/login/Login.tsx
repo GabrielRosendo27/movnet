@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { OrangeButton } from "../buttons/OrangeButton";
+import { Button } from "../buttons/Button";
 import { Input } from "../form/Input";
 import { useLoginUser } from "./hooks/useLoginUser";
 import { useState } from "react";
@@ -30,13 +30,13 @@ export function Login() {
 
           <Input text="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-          <OrangeButton text={isLoading ? "Entrando..." : "Entrar"} onClick={handleSubmit} disabled={isLoading} />
+          <Button text={isLoading ? "Entrando..." : "Entrar"} onClick={handleSubmit} disabled={isLoading} />
 
           {error && <p className="text-red-500 mt-2">{error}</p>}
 
           <div className="flex gap-5">
-            <OrangeButton text="Voltar" onClick={() => onClick("home")} />
-            <OrangeButton text="Criar conta" onClick={() => onClick("register")} />
+            <Button text="Voltar" onClick={() => onClick("home")} />
+            <Button text="Criar conta" onClick={() => onClick("register")} />
           </div>
         </div>
       </div>

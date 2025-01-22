@@ -10,45 +10,43 @@ export function TypingEffect() {
   const textObj = {
     fullString: "Descubra, organize e acompanhe seus filmes favoritos",
     segments: [
-      { text: "Descubra", style: "text-myOrange text-5xl" },
-      { text: "Organize", style: "text-myPurple text-5xl  mt-2" },
-      { text: "Acompanhe", style: "text-white text-5xl mt-2" },
+      { text: "Descubra", style: "text-myOrange text-6xl" },
+      { text: "Organize", style: "text-myPurple text-6xl  mt-2" },
+      { text: "Acompanhe", style: "text-white text-6xl mt-2" },
       { text: "Listas com seus filmes favoritos!", style: "text-gray-400 text-2xl mt-2" },
     ],
   };
-  const [currentSegmentIndex, setCurrentSegmentIndex] = useState(0); // Índice do segmento atual
+  const [currentSegmentIndex, setCurrentSegmentIndex] = useState(0);
   const [visibleText, setVisibleText] = useState<Segment[]>(
     textObj.segments.map((segment) => ({
       ...segment,
-      visibleText: "", // Inicialmente vazio
+      visibleText: "",
     }))
   );
   useEffect(() => {
     const currentSegment = visibleText[currentSegmentIndex];
 
-    if (!currentSegment) return; // Fim da animação
+    if (!currentSegment) return;
 
     const segmentText = currentSegment.text;
 
-    // Animação letra por letra dentro do segmento atual
     const interval = setInterval(() => {
       setVisibleText((prev) =>
         prev.map((segment, index) =>
           index === currentSegmentIndex
             ? {
                 ...segment,
-                visibleText: segment.visibleText + segmentText[segment.visibleText.length], // Adiciona a próxima letra
+                visibleText: segment.visibleText + segmentText[segment.visibleText.length],
               }
             : segment
         )
       );
 
-      // Move para o próximo segmento quando o texto atual estiver completamente visível
       if (currentSegment.visibleText.length + 1 === segmentText.length) {
         clearInterval(interval);
-        setCurrentSegmentIndex((prev) => prev + 1); // Avança para o próximo segmento
+        setCurrentSegmentIndex((prev) => prev + 1);
       }
-    }, 50);
+    }, 40);
 
     return () => clearInterval(interval);
   }, [currentSegmentIndex, visibleText]);

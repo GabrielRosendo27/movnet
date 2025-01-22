@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Input } from "../form/Input";
-import { OrangeButton } from "../buttons/OrangeButton";
+import { Button } from "../buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { RegisterFormInputs } from "../validations/registerSchema";
 import { useRegisterForm } from "./hooks/useRegisterForm";
@@ -39,8 +39,8 @@ export function Register() {
           {errors.password && <span className="text-red-600">{errors.password.message}</span>}
         </div>
         <div className="flex gap-5">
-          <OrangeButton text="Voltar" onClick={onClick} />
-          <OrangeButton text="Criar Conta" type="submit" />
+          <Button text="Voltar" onClick={onClick} />
+          <Button text="Criar Conta" type="submit" />
         </div>
         {isError && <span className="text-red-600">Erro ao registrar: {error?.message}</span>}
         {isPending && <span className="text-green-400">Carregando...</span>}

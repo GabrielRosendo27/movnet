@@ -1,4 +1,5 @@
-import { OrangeButton } from "../buttons/OrangeButton";
+import { Button } from "../buttons/Button";
+import { Menu } from "../menu/Menu";
 import { TypingEffect } from "./Hooks/TypingEffect";
 import { useNavigate } from "react-router-dom";
 export function Home() {
@@ -9,11 +10,16 @@ export function Home() {
   }
 
   return (
-    <div className="bg-darkGradient w-screen h-screen flex items-center justify-center">
-      <div className="container flex flex-col items-center justify-center">
-        <TypingEffect />
-        <div className="mt-6">
-          <OrangeButton onClick={onClick} text="Começar" />
+    <div className="overflow-hidden w-screen h-screen bg-darkGradient ">
+      <div>
+        <Menu />
+      </div>
+      <div className="relative flex flex-col justify-center items-center h-screen">
+        <div className="flex flex-col items-center justify-center mb-12">
+          <TypingEffect />
+          <div className="absolute bottom-64">
+            <Button onClick={onClick} text="Começar" />
+          </div>
         </div>
       </div>
     </div>

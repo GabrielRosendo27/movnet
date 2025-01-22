@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         darkBlue: "#010D1C",
-        myOrange: "#F34D29",
+        myOrange: "#ea580c",
         myPurple: "#6A48F2",
       },
       backgroundImage: {
