@@ -18,7 +18,7 @@ export function Home() {
         <div className="flex flex-col items-center justify-center mb-12">
           <TypingEffect />
           <div className="absolute bottom-64">
-            <Button onClick={onClick} text="Começar" />
+            <Button onClick={onClick} text="Começar" className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3" />
           </div>
         </div>
       </div>
