@@ -9,7 +9,9 @@ export function Login() {
   const { login, isLoading, error } = useLoginUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
+
   function onClick(action: string) {
     if (action === "register") {
       navigate("/register");
