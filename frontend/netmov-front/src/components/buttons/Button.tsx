@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
 interface ButtonProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  text: string;
+  text: ReactNode;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
   className?: string;

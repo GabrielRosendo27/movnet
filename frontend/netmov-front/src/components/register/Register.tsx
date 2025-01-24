@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Input } from "../form/Input";
 import { Button } from "../buttons/Button";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +6,7 @@ import { useRegisterForm } from "./hooks/useRegisterForm";
 import { useRegisterUser } from "./hooks/useRegisterUser";
 import { Menu } from "../menu/Menu";
 import { useState } from "react";
+import { Spinner } from "../../assets/spinner";
 
 export function Register() {
   const navigate = useNavigate();
@@ -47,10 +47,22 @@ export function Register() {
             <div className="mb-4">{errors.password && <span className="text-red-600 text-sm">{errors.password.message}</span>}</div>
           </div>
           <div className="flex gap-5">
-            <Button text="Criar Conta" type="submit" className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3" />
+            <Button
+              text={
+                isPending ? (
+                  <div className="px-8 ">
+                    <Spinner />
+                  </div>
+                ) : (
+                  "Criar Conta"
+                )
+              }
+              type="submit"
+              className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3"
+            />
           </div>
           {isError && <span className="text-red-600 text-sm">Erro ao registrar: {error?.message}</span>}
-          {isPending && <span className="text-green-400">Carregando...</span>}
+
           {successMessage && <p className="text-green-500">{successMessage}</p>}
         </div>
       </form>
