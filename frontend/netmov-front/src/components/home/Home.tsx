@@ -6,7 +6,7 @@ export function Home() {
   const navigate = useNavigate();
 
   function onClick() {
-    navigate("/login");
+    navigate("/register");
   }
 
   return (
@@ -14,11 +14,11 @@ export function Home() {
       <div>
         <Menu />
       </div>
-      <div className="relative flex flex-col justify-center items-center h-screen">
+      <div className=" flex flex-col justify-center items-center h-screen">
         <div className="flex flex-col items-center justify-center mb-12">
           <TypingEffect />
-          <div className="absolute bottom-64">
-            <Button onClick={onClick} text="Começar" className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3" />
+          <div className="mt-4 ">
+            <Button onClick={onClick} text="Começar" className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3 animate-fadeSlideDown" />
           </div>
         </div>
       </div>

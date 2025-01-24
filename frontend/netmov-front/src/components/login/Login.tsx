@@ -28,9 +28,13 @@ export function Login() {
     <>
       <div className="bg-darkGradient w-screen h-screen flex items-center justify-center flex-col">
         <Menu />
-        <h1 className="text-white text-4xl mb-4">...</h1>
+        <div className="mb-4">
+          <p className="text-gray-400 mb-4">
+            Preencha seus dados, caso não possua uma conta, <Button text="registre-se" onClick={() => onClick("register")} className=" text-myOrange" />
+          </p>
+        </div>
         <div className="flex flex-col">
-          <Input text="E-mail" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input text="E-mail" type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="mb-8" classNameSpan="bottom-8" />
 
           <Input text="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
@@ -38,15 +42,12 @@ export function Login() {
             text={isLoading ? "Entrando..." : "Entrar"}
             onClick={handleSubmit}
             disabled={isLoading}
-            className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3"
+            className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-6"
           />
 
           {error && <p className="text-red-500 mt-2">{error}</p>}
 
-          <div className="flex gap-5">
-            <Button text="Voltar" onClick={() => onClick("home")} className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3" />
-            <Button text="Criar conta" onClick={() => onClick("register")} className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3" />
-          </div>
+          <div className="flex gap-5"></div>
         </div>
       </div>
     </>
