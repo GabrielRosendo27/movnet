@@ -25,17 +25,44 @@ public class UserController : ControllerBase
         var users = _context.Users.Take(1).ToList();
         return Ok(users);
       }
-      [HttpPost("main")]
+      
+      
+      [HttpGet("main")]
       [Authorize]
-      public ActionResult GetUserMain()
-      {
-        var userName = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
-        if(string.IsNullOrEmpty(userName)){
-          return Unauthorized("Usuário não encontrado.");
-        }
-        return Ok( new { message = "Bem vindo, ", userName = userName });
-      }
+      public ActionResult<object> GetUserDetails()
+{
+    var authHeader = HttpContext.Request.Headers.Authorization.ToString();
+    if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+    {
+        return Unauthorized("Token não encontrado ou inválido.");
+    }
 
+    var token = authHeader["Bearer ".Length..].Trim();
+    var handler = new JwtSecurityTokenHandler();
+
+    try
+    {
+        var jwtToken = handler.ReadToken(token) as JwtSecurityToken;
+        var userEmail = jwtToken?.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
+
+        if (userEmail == null)
+        {
+            return Unauthorized("Token inválido ou expiro.");
+        }
+
+        var user = _context.Users.FirstOrDefault(u => u.Email == userEmail);
+        if (user == null)
+        {
+            return NotFound("Usuário não encontrado.");
+        }
+
+        return Ok(new { userName = user.User });
+    }
+    catch (Exception ex)
+    {
+        return BadRequest($"Erro ao processar o token: {ex.Message}");
+    }
+}
 
 
 
