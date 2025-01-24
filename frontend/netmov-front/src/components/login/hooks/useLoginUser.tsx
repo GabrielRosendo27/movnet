@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../../../hooks/useAuthContext";
 
 interface LoginData {
   email: string;
@@ -12,6 +13,7 @@ interface LoginResponse {
 export function useLoginUser() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const loginRequest = async (loginData: LoginData): Promise<LoginResponse> => {
     const response = await fetch("http://localhost:5000/User/login", {
@@ -34,7 +36,8 @@ export function useLoginUser() {
     onSuccess: (data) => {
       const token = data.token;
       localStorage.setItem("authToken", token);
-      navigate("/");
+      login();
+      navigate("/main");
     },
     onError: (err: Error) => {
       setError(err.message || "Erro ao realizar login");

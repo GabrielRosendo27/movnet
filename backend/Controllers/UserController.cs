@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using backend.data;
 using backend.models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 namespace backend.controllers
@@ -24,7 +25,21 @@ public class UserController : ControllerBase
         var users = _context.Users.Take(1).ToList();
         return Ok(users);
       }
-      
+      [HttpPost("main")]
+      [Authorize]
+      public ActionResult GetUserMain()
+      {
+        var userName = User.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+        if(string.IsNullOrEmpty(userName)){
+          return Unauthorized("Usuário não encontrado.");
+        }
+        return Ok( new { message = "Bem vindo, ", userName = userName });
+      }
+
+
+
+
+
       [HttpPost]
       public async Task<ActionResult<UserModel>> RegisterUser(UserModel user){
         user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
@@ -39,8 +54,6 @@ public class UserController : ControllerBase
         if(foundUser == null || !BCrypt.Net.BCrypt.Verify(user.Password, foundUser.Password)) { 
           return Unauthorized("E-mail ou senha inválidos."); 
         }
-
-        // Token Creation
 
         var claims = new[]{
           new Claim(JwtRegisteredClaimNames.Sub, foundUser.Email),
