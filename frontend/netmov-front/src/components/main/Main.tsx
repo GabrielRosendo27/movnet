@@ -1,6 +1,10 @@
 // import { useEffect } from "react";
 // import { useFetchUserName } from "../login/hooks/useFetchUserName";
 
+import { MainMenu } from "../menu/MainMenu";
+import { LatestMovies } from "./latest-movies/LatestMovies";
+import { MovieBestRated } from "./movie-best-rated/MovieBestRated";
+
 export function Main() {
   // const { fetchUserName, isLoading, error, userName } = useFetchUserName();
 
@@ -17,8 +21,10 @@ export function Main() {
 
   return (
     <>
-      <div className="bg-darkGradient w-screen h-screen">
-        <div>aa</div>
+      <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center gap-5">
+        <MainMenu />
+        <LatestMovies />
+        <MovieBestRated />
       </div>
     </>
   );
