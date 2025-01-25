@@ -46,7 +46,8 @@ export function Register() {
             <Input text="Senha" {...register("password")} type="password" />
             <div className="mb-4">{errors.password && <span className="text-red-600 text-sm">{errors.password.message}</span>}</div>
           </div>
-          <div className="flex gap-5">
+          <div className="flex flex-col">
+            {isError && <span className="text-red-600 text-md">Falha na requisição - {error?.message}</span>}
             <Button
               text={
                 isPending ? (
@@ -61,7 +62,6 @@ export function Register() {
               className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3"
             />
           </div>
-          {isError && <span className="text-red-600 text-sm">Erro ao registrar: {error?.message}</span>}
 
           {successMessage && <p className="text-green-500">{successMessage}</p>}
         </div>

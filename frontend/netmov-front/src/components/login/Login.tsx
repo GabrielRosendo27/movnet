@@ -4,7 +4,6 @@ import { Input } from "../form/Input";
 import { useLoginUser } from "./hooks/useLoginUser";
 import { useState } from "react";
 import { Menu } from "../menu/Menu";
-import { Spinner } from "../../assets/spinner";
 
 export function Login() {
   const { login, isLoading, error } = useLoginUser();
@@ -38,7 +37,6 @@ export function Login() {
           <Input text="E-mail" type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="mb-8" classNameSpan="bottom-8" />
 
           <Input text="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <Spinner />
 
           <Button
             text={isLoading ? "Entrando..." : "Entrar"}
