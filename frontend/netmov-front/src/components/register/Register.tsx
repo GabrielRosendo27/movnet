@@ -6,7 +6,7 @@ import { useRegisterForm } from "./hooks/useRegisterForm";
 import { useRegisterUser } from "./hooks/useRegisterUser";
 import { Menu } from "../menu/Menu";
 import { useState } from "react";
-import { Spinner } from "../../assets/spinner";
+import { Spinner } from "../../assets/Spinner";
 
 export function Register() {
   const navigate = useNavigate();
