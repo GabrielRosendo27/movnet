@@ -27,7 +27,7 @@ public class MovieController : ControllerBase
           {
             return Ok(existingMovie);
           }
-          var tmdbApiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ODc0MGZjZWRlMDM3YzY2MzFmMGQ5NGM1MDhmMDQ1NCIsIm5iZiI6MTcxODU4ODgzNS43MTIsInN1YiI6IjY2NmY5NWEzM2IwZTYzMjk5YWQxZDE5OSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.c6Na8v6qRK9sXyZdgbyR3E0gwCyvQLpBS3lPUcJRYj4"; // Substitua pela sua chave TMDB
+          var tmdbApiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ODc0MGZjZWRlMDM3YzY2MzFmMGQ5NGM1MDhmMDQ1NCIsIm5iZiI6MTcxODU4ODgzNS43MTIsInN1YiI6IjY2NmY5NWEzM2IwZTYzMjk5YWQxZDE5OSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.c6Na8v6qRK9sXyZdgbyR3E0gwCyvQLpBS3lPUcJRYj4"; 
           var tmdbUrl = $"https://api.themoviedb.org/3/search/movie?query={Uri.EscapeDataString(title)}&api_key={tmdbApiKey}";
 
           var tmdbResponse = await _httpClient.GetAsync(tmdbUrl);
@@ -57,7 +57,7 @@ public class MovieController : ControllerBase
                 OriginalTitle = tmdbOriginalTitle,
                 Overview = tmdbOverview,
                 Runtime = tmdbRuntime,
-                PosterPath = $"https://image.tmdb.org/t/p/w500{tmdbPosterPath}",
+                FilePath = $"https://image.tmdb.org/t/p/w500{tmdbPosterPath}",
                 // Year = !string.IsNullOrEmpty(omdbYear) ? int.Parse(omdbYear) : null,
                 // Genre = omdbGenre?.Split(", ").ToList(),
                 // IMDBRating = !string.IsNullOrEmpty(omdbImdbRating) ? decimal.Parse(omdbImdbRating) : null,

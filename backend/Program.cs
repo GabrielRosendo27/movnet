@@ -29,12 +29,19 @@ builder.Services.AddSwaggerGen(
         });
     }
 );
-builder.Services.AddCors(options => 
+builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy => {
-        policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") 
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials(); 
     });
 });
+
+
+
 
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>{
     options.TokenValidationParameters = new TokenValidationParameters {
