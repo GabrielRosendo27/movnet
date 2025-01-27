@@ -10,6 +10,9 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -o out
 
+
+RUN apt-get update && apt-get install -y postgresql-client
+
 # Usar a imagem base do runtime do .NET 9.0
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app

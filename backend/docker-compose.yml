@@ -9,6 +9,8 @@ services:
       - backend
     volumes:
       - ../frontend/netmov-front:/app
+    networks:
+      - movnet-network
   backend:
     build:
       context: ../backend
@@ -17,20 +19,20 @@ services:
     command: >
       sh -c "dotnet ef database update && dotnet backend.dll"
     depends_on:
-      - db
+      - postdb
     networks:
       - movnet-network
     ports:
       - "5000:8080"
     volumes:
       - ./data-protection:/app/keys
-  db:
-    image: postgres
+  postdb:
+    image: postgres:latest
     restart: always
     environment:
       POSTGRES_USER: movnet_user
       POSTGRES_DB: movnet_db
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: pass123
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:

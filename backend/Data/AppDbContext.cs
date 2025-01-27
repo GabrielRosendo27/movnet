@@ -7,5 +7,6 @@ namespace backend.data
   { 
     public AppDbContext(DbContextOptions options) : base(options){}
     public DbSet<UserModel> Users { get; set;} = null!;
+    public DbSet<MovieModel> Movies { get; set;} = null!;
   }
 }

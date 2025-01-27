@@ -8,12 +8,18 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
+
 builder.Services.AddOpenApi();
+
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddDbContext<AppDbContext>
-(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddHttpClient();
+
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 builder.Services.AddSwaggerGen(
     c => {
         c.SwaggerDoc("v1", new OpenApiInfo {
@@ -26,7 +32,7 @@ builder.Services.AddSwaggerGen(
 builder.Services.AddCors(options => 
 {
     options.AddPolicy("AllowAll", policy => {
-        policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+        policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
     });
 });
 
@@ -58,9 +64,13 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = string.Empty;
     });
 }
+
 app.UseHttpsRedirection();
+app.UseRouting();
 app.UseCors("AllowAll");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 app.Run();
