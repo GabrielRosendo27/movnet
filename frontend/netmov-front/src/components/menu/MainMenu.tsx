@@ -14,26 +14,19 @@ export function MainMenu() {
           <Button
             text="Movnet"
             className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
-            onClick={() => onClick("/")}
+            onClick={() => onClick("/main")}
           />
         </li>
         <li>
           <Button
             text="Minha Lista"
             className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
-            onClick={() => onClick("/")}
+            onClick={() => onClick("/userlist")}
           />
         </li>
 
         <li>
           <Button text="+ Adicionar Filme" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800" onClick={() => onClick("/login")} />
-        </li>
-        <li>
-          <Button
-            text="Minha Lista"
-            className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
-            onClick={() => onClick("/")}
-          />
         </li>
       </ul>
     </div>
