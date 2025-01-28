@@ -21,7 +21,7 @@ export function Main() {
 
   return (
     <>
-      <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center gap-5">
+      <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center">
         <MainMenu />
         <LatestMovies />
         <MovieBestRated />
