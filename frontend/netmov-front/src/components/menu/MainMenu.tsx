@@ -37,14 +37,14 @@ export function MainMenu() {
   }, [showInput]);
 
   const fetchMovieData = async (movieName: string) => {
-    const response = await fetch(`http://localhost:5000/api/movies?title=${encodeURIComponent(movieName)}`);
+    const response = await fetch(`http://localhost:5000/Movie/${encodeURIComponent(movieName)}`);
     if (!response.ok) {
       throw new Error("Erro ao buscar dados do filme");
     }
     return response.json();
   };
-
-  const { data, error, refetch, isFetching, isPending } = useQuery({
+  // isFetching,
+  const { data, error, refetch, isPending } = useQuery({
     queryKey: ["movieData", movieName],
     queryFn: () => fetchMovieData(movieName),
     enabled: false, // A requisição só será feita manualmente
@@ -60,7 +60,7 @@ export function MainMenu() {
     if (data) {
       console.log("Dados do filme:", data);
       // Aqui você pode fazer algo com os dados retornados, como exibir em um modal ou adicionar à lista
-      alert(`Filme encontrado: ${data.title}`);
+      alert(`Filme encontrado: ${data.Title}`);
     }
     if (error) {
       console.error("Erro ao buscar filme:", error);
@@ -95,9 +95,9 @@ export function MainMenu() {
                   onChange={(e) => setMovieName(e.target.value)}
                 />
                 {isPending ? (
-                  <Button text="Adicionar" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800 mb-5 ml-4" onClick={handleAddMovie} />
-                ) : (
                   <Spinner />
+                ) : (
+                  <Button text="Adicionar" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800 mb-5 ml-4" onClick={handleAddMovie} />
                 )}
               </div>
             </div>
