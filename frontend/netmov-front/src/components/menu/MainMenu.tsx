@@ -95,9 +95,9 @@ export function MainMenu() {
                   onChange={(e) => setMovieName(e.target.value)}
                 />
                 {isPending ? (
-                  <Spinner />
-                ) : (
                   <Button text="Adicionar" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800 mb-5 ml-4" onClick={handleAddMovie} />
+                ) : (
+                  <Spinner />
                 )}
               </div>
             </div>
