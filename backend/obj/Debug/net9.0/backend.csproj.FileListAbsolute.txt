@@ -383,3 +383,4 @@ c:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backen
 c:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 c:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\obj\Debug\net9.0\ref\backend.dll
 c:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\Users\Pichau\Documents\Arquivos\Programacao\Apps\projetos novos\netmov\backend\bin\Debug\net9.0\appsettings.Production.json

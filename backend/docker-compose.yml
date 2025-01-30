@@ -3,40 +3,50 @@ services:
     build:
       context: ../frontend/netmov-front
       dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
     ports:
       - "3000:80"
     depends_on:
       - backend
-    volumes:
-      - ../frontend/netmov-front:/app
     networks:
       - movnet-network
   backend:
     build:
       context: ../backend
       dockerfile: Dockerfile
-    working_dir: /app
     command: >
-      sh -c "dotnet ef database update && dotnet backend.dll"
+      sh -c "while ! nc -z postdb 5432; do sleep 2; done && dotnet backend.dll"
     depends_on:
-      - postdb
+      postdb:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
     networks:
       - movnet-network
     ports:
-      - "5000:8080"
+      - "5000:80"
     volumes:
       - ./data-protection:/app/keys
   postdb:
     image: postgres:latest
+    ports:
+      - "5432:5432"
     restart: always
     environment:
-      POSTGRES_USER: movnet_user
-      POSTGRES_DB: movnet_db
-      POSTGRES_PASSWORD: pass123
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - movnet-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   adminer:
     image: adminer
@@ -52,3 +62,4 @@ networks:
 
 volumes:
   pgdata:
+  data-protection:

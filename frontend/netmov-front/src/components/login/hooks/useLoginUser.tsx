@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../../hooks/useAuthContext";
+import { API_ENDPOINTS } from "../../../config/api";
 
 interface LoginData {
   email: string;
@@ -9,6 +10,7 @@ interface LoginData {
 }
 interface LoginResponse {
   token: string;
+  refreshToken: string;
 }
 export function useLoginUser() {
   const [error, setError] = useState<string | null>(null);
@@ -16,11 +18,12 @@ export function useLoginUser() {
   const { login } = useAuth();
 
   const loginRequest = async (loginData: LoginData): Promise<LoginResponse> => {
-    const response = await fetch("http://localhost:5000/User/login", {
+    const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(loginData),
     });
 
@@ -34,8 +37,8 @@ export function useLoginUser() {
   const mutation = useMutation<LoginResponse, Error, LoginData>({
     mutationFn: loginRequest,
     onSuccess: (data) => {
-      const token = data.token;
-      localStorage.setItem("authToken", token);
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("refreshToken", data.refreshToken);
       login();
       navigate("/main");
     },
@@ -48,5 +51,6 @@ export function useLoginUser() {
     login: mutation.mutate,
     isLoading: mutation.isPending,
     error,
+    resetError: () => setError(null),
   };
 }

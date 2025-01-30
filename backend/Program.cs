@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:3000") 
+        policy.WithOrigins("http://localhost:3000", "http://frontend","http://frontend:80") 
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials(); 
@@ -52,7 +52,11 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>{
             ValidIssuer = "sua-aplicacao",
             ValidAudience = "seus-usuarios",
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sua-chave-secreta-super-segura-de-32-caracteres"))
+            
     };
+}).AddCookie(options => {
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
     builder.Services.AddDataProtection()
         .PersistKeysToFileSystem(new DirectoryInfo("/app/keys"))
@@ -60,6 +64,10 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>{
 
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope()) {
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -72,7 +80,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowAll");
 

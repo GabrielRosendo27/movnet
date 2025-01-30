@@ -3,7 +3,8 @@ import { Button } from "../buttons/Button";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "../form/Input";
 import { useQuery } from "@tanstack/react-query";
-import { Spinner } from "../../assets/Spinner";
+// import { Spinner } from "../../assets/Spinner";
+import { API_ENDPOINTS } from "../../config/api";
 
 export function MainMenu() {
   const navigate = useNavigate();
@@ -37,9 +38,10 @@ export function MainMenu() {
   }, [showInput]);
 
   const fetchMovieData = async (movieName: string) => {
-    const response = await fetch(`http://localhost:5000/Movie/${encodeURIComponent(movieName)}`);
+    const response = await fetch(API_ENDPOINTS.MOVIES.GET_BY_NAME(movieName));
     if (!response.ok) {
-      throw new Error("Erro ao buscar dados do filme");
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erro ao buscar dados do filme");
     }
     return response.json();
   };
@@ -97,7 +99,7 @@ export function MainMenu() {
                 {isPending ? (
                   <Button text="Adicionar" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800 mb-5 ml-4" onClick={handleAddMovie} />
                 ) : (
-                  <Spinner />
+                  <Button text="Adicionar" className="px-4 py-2 text-sm bg-myOrange text-white hover:bg-indigo-800 mb-5 ml-4" onClick={handleAddMovie} />
                 )}
               </div>
             </div>

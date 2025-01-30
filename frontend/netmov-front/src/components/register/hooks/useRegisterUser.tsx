@@ -9,9 +9,9 @@ export interface RegisterUserPayload {
 export interface RegisterResponse {
   message: string;
 }
-
+const API_BASE = import.meta.env.MODE === "development" ? "http://localhost:5000" : "";
 const registerUser = async (data: RegisterUserPayload): Promise<RegisterResponse> => {
-  const response = await fetch("http://localhost:5000/User", {
+  const response = await fetch(`${API_BASE}/api/User`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
