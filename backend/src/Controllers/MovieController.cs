@@ -72,7 +72,17 @@ public class MovieController : ControllerBase
           var omdbImdbRating = (string)omdbData["imdbRating"];
           var omdbPoster = (string)omdbData["Poster"];
           var omdbRatings = omdbData["Ratings"] as JArray;
-          var omdbRuntime = omdbData["Runtime"]?.ToObject<int?>();
+          var runtimeString = omdbData["Runtime"]?.ToString();
+          int? omdbRuntime = null;
+            if (!string.IsNullOrEmpty(runtimeString))
+            {
+                // Extrai apenas os dígitos da string (ex.: "149 min" se torna "149")
+                var digits = new string(runtimeString.Where(char.IsDigit).ToArray());
+                if (int.TryParse(digits, out int parsedRuntime))
+                {
+                    omdbRuntime = parsedRuntime;
+                }
+            }
           var omdbRottenRating = omdbRatings?.FirstOrDefault(r => (string)r["Source"] == "Rotten Tomatoes")?["Value"]?.ToString();
 
          var newMovie = new MovieModel

@@ -97,6 +97,53 @@ namespace backend.Migrations
 
                     b.ToTable("Users");
                 });
+
+            modelBuilder.Entity("backend.models.UserMovie", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("UserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("UserMovies");
+                });
+
+            modelBuilder.Entity("backend.models.UserMovie", b =>
+                {
+                    b.HasOne("backend.models.MovieModel", "Movie")
+                        .WithMany("UserMovies")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.models.UserModel", "User")
+                        .WithMany("UserMovies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.models.MovieModel", b =>
+                {
+                    b.Navigation("UserMovies");
+                });
+
+            modelBuilder.Entity("backend.models.UserModel", b =>
+                {
+                    b.Navigation("UserMovies");
+                });
 #pragma warning restore 612, 618
         }
     }

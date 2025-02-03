@@ -23,15 +23,17 @@ export function useLoginUser() {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include",
       body: JSON.stringify(loginData),
     });
 
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem("token", data.token);
+    }
     if (!response.ok) {
       throw new Error("E-mail ou senha inválidos");
     }
-
-    return response.json();
+    return data;
   };
 
   const mutation = useMutation<LoginResponse, Error, LoginData>({

@@ -1,9 +1,11 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using backend.data;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using backend.src.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddHttpClient();
+
+builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -36,22 +40,28 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:3000", "http://frontend","http://frontend:80") 
               .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowCredentials(); 
+              .AllowCredentials()
+              .WithExposedHeaders("*"); 
+              
     });
 });
 
 
 
 
-builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>{
+
+var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+builder.Services.AddAuthentication("Bearer").AddJwtBearer(options => {
     options.TokenValidationParameters = new TokenValidationParameters {
             ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = "sua-aplicacao",
-            ValidAudience = "seus-usuarios",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sua-chave-secreta-super-segura-de-32-caracteres"))
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings?.Issuer,
+        ValidAudience = jwtSettings?.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(jwtSettings?.SecretKey!)),
+        NameClaimType = JwtRegisteredClaimNames.Sub
             
     };
 }).AddCookie(options => {

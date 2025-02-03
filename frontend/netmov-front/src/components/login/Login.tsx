@@ -24,9 +24,6 @@ export function Login() {
   const onSubmit = (data: { email: string; password: string }) => {
     login(data);
   };
-  // const buttonSubmit = () => {
-  //   login({ email, password });
-  // };
 
   const { register, handleSubmit, errors } = useLoginForm(onSubmit);
   return (

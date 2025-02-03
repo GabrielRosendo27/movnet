@@ -18,5 +18,6 @@ namespace backend.models
         public List<string>? Genre { get; set; } 
         public decimal? IMDBRating { get; set; } 
         public decimal? RottenRating { get; set; } 
+        public List<UserMovie> UserMovies { get; set; } = new();
     }
 }

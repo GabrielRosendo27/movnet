@@ -2,19 +2,20 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../buttons/Button";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "../form/Input";
-import { useQuery } from "@tanstack/react-query";
+import { useAddMovie } from "../main/user-list/hooks/useAddMovie";
+
 // import { Spinner } from "../../assets/Spinner";
-import { API_ENDPOINTS } from "../../config/api";
 
 export function MainMenu() {
   const navigate = useNavigate();
 
+  const { mutate, isPending, isError, error } = useAddMovie();
+  const [showInput, setShowInput] = useState(false);
+  const [movieName, setMovieName] = useState("");
+
   function onClick(route: string) {
     navigate(route);
   }
-
-  const [showInput, setShowInput] = useState(false);
-  const [movieName, setMovieName] = useState("");
 
   const inputRef = useRef<HTMLDivElement>(null);
   const inputElementRef = useRef<HTMLInputElement>(null);
@@ -37,38 +38,27 @@ export function MainMenu() {
     }
   }, [showInput]);
 
-  const fetchMovieData = async (movieName: string) => {
-    const response = await fetch(API_ENDPOINTS.MOVIES.GET_BY_NAME(movieName));
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Erro ao buscar dados do filme");
-    }
-    return response.json();
-  };
-  // isFetching,
-  const { data, error, refetch, isPending } = useQuery({
-    queryKey: ["movieData", movieName],
-    queryFn: () => fetchMovieData(movieName),
-    enabled: false, // A requisição só será feita manualmente
-  });
   const handleAddMovie = () => {
     if (movieName.trim() === "") {
       alert("Por favor, digite o nome do filme.");
       return;
     }
-    refetch(); // Dispara a requisição GET
+
+    mutate(
+      { title: movieName },
+      {
+        onSuccess: () => {
+          alert("Filme adicionado com sucesso!");
+          setMovieName("");
+          setShowInput(false);
+        },
+        onError: (error) => {
+          alert(error.message || "Erro ao adicionar filme");
+        },
+      }
+    );
   };
-  useEffect(() => {
-    if (data) {
-      console.log("Dados do filme:", data);
-      // Aqui você pode fazer algo com os dados retornados, como exibir em um modal ou adicionar à lista
-      alert(`Filme encontrado: ${data.Title}`);
-    }
-    if (error) {
-      console.error("Erro ao buscar filme:", error);
-      alert("Erro ao buscar filme. Tente novamente.");
-    }
-  }, [data, error]);
+
   return (
     <div className="p-4 bg-[#010C19] fixed top-0 left-0 w-full z-10">
       <ul className="flex gap-4 justify-between mx-12 items-center">
@@ -95,13 +85,16 @@ export function MainMenu() {
                   className={`rounded-sm bg-transparent text-md`}
                   ref={inputElementRef}
                   onChange={(e) => setMovieName(e.target.value)}
+                  value={movieName}
                 />
-                {isPending ? (
-                  <Button text="Adicionar" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800 mb-5 ml-4" onClick={handleAddMovie} />
-                ) : (
-                  <Button text="Adicionar" className="px-4 py-2 text-sm bg-myOrange text-white hover:bg-indigo-800 mb-5 ml-4" onClick={handleAddMovie} />
-                )}
+                <Button
+                  text={isPending ? "Adicionando..." : "Adicionar"}
+                  className={`px-4 py-2 text-sm text-white hover:bg-indigo-800 mb-5 ml-4 ${isPending ? "bg-gray-500" : "bg-myOrange"}`}
+                  onClick={handleAddMovie}
+                  disabled={isPending}
+                />
               </div>
+              {isError && <p className="text-red-500 text-sm mt-1">{error?.message}</p>}
             </div>
           </div>
         </li>
