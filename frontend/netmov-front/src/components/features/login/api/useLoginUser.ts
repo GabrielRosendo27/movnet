@@ -1,17 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../../hooks/useAuthContext";
-import { API_ENDPOINTS } from "../../../config/api";
+import { useAuth } from "../../../../hooks/useAuthContext";
+import { API_ENDPOINTS } from "../../../../config/api";
+import { LoginData, LoginResponse } from "../types/types";
 
-interface LoginData {
-  email: string;
-  password: string;
-}
-interface LoginResponse {
-  token: string;
-  refreshToken: string;
-}
 export function useLoginUser() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();

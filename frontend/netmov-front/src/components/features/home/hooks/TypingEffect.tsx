@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-
-interface Segment {
-  text: string;
-  style: string;
-  visibleText: string;
-}
+import { Segment } from "../types/types";
 
 export function TypingEffect() {
   const textObj = {

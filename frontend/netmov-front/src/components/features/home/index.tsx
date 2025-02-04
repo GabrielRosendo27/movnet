@@ -1,6 +1,6 @@
-import { Button } from "../buttons/Button";
-import { Menu } from "../menu/Menu";
-import { TypingEffect } from "./Hooks/TypingEffect";
+import { Button } from "../../ui/buttons/Button";
+import { Menu } from "../../menu/Menu";
+import { TypingEffect } from "./hooks/TypingEffect";
 import { useNavigate } from "react-router-dom";
 export function Home() {
   const navigate = useNavigate();

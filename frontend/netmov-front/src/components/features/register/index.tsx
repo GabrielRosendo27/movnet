@@ -1,34 +1,12 @@
-import { Input } from "../form/Input";
-import { Button } from "../buttons/Button";
-import { useNavigate } from "react-router-dom";
-import { RegisterFormInputs } from "../validations/registerSchema";
+import { Input } from "../../ui/form/Input";
+import { Button } from "../../ui/buttons/Button";
 import { useRegisterForm } from "./hooks/useRegisterForm";
-import { useRegisterUser } from "./hooks/useRegisterUser";
-import { Menu } from "../menu/Menu";
-import { useState } from "react";
-import { Spinner } from "../../assets/Spinner";
+import { Menu } from "../../menu/Menu";
+import { Spinner } from "../../../assets/Spinner";
+import { useRegisterSubmit } from "./hooks/useRegisterSubmit";
 
 export function Register() {
-  const navigate = useNavigate();
-
-  const { mutate, isPending, isError, error } = useRegisterUser();
-  const [successMessage, setSuccessMessage] = useState("");
-
-  const onSubmit = (data: RegisterFormInputs) => {
-    mutate(data, {
-      onSuccess: (response) => {
-        setSuccessMessage("Usuário registrado com sucesso!");
-        console.log("Usuário registrado com sucesso:", response.message);
-        setTimeout(() => {
-          setSuccessMessage("");
-          navigate("/login");
-        }, 3000);
-      },
-      onError: (err) => {
-        console.log("Erro ao registrar usuário", err.message);
-      },
-    });
-  };
+  const { onSubmit, successMessage, isPending, isError, error } = useRegisterSubmit();
   const { register, handleSubmit, errors } = useRegisterForm(onSubmit);
 
   return (
