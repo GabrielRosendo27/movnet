@@ -1,11 +1,4 @@
-interface MovieCardProps {
-  title: string;
-  year: number;
-  overview: string;
-  rating?: number;
-  posterUrl?: string;
-  onRemove?: () => void;
-}
+import { MovieCardProps } from "../types/types";
 
 export function MovieCard({ title, year, overview }: MovieCardProps) {
   return (

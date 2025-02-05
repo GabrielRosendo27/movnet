@@ -1,14 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_ENDPOINTS } from "../../../../config/api";
-
-interface Movie {
-  id: number;
-  Title: string;
-  PosterPath: string;
-  Year: number;
-  IMDBRating: number;
-  Overview: string;
-}
+import { Movie } from "../types/types";
 
 export const useUserMovies = () => {
   return useQuery<Movie[]>({

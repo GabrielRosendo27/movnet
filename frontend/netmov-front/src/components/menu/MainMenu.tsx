@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/buttons/Button";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/form/Input";
-import { useAddMovie } from "../main/user-list/hooks/useAddMovie";
+import { useAddMovie } from "../../hooks/useAddMovie";
 
 // import { Spinner } from "../../assets/Spinner";
 

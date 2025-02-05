@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "../components/features/home";
-import { Login } from "../components/login/Login";
+import { Login } from "../components/features/login/index";
 import { Register } from "../components/features/register/index";
 import { useAuth } from "../hooks/useAuthContext";
 import { Main } from "../components/main/Main";

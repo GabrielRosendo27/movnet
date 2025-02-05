@@ -1,7 +1,7 @@
-import { MainMenu } from "../../menu/MainMenu";
-import { useUserMovies } from "./hooks/useUserMovies"; // Ou o caminho correto
-import { MovieCard } from "../user-list/MovieCard"; // Componente assumido
-import { Spinner } from "../../../assets/Spinner"; // Componente de loading
+import { MainMenu } from "../../../menu/MainMenu";
+import { useUserMovies } from "../api/userMovies"; // Ou o caminho correto
+import { MovieCard } from "./MovieCard"; // Componente assumido
+import { Spinner } from "../../../../assets/Spinner"; // Componente de loading
 
 export function UserList() {
   const { data: movies, isLoading, isError, error } = useUserMovies();

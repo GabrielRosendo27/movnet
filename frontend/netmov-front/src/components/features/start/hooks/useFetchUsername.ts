@@ -1,7 +1,7 @@
-import { useProtectedRequest } from "../api/useProtectedRequest";
+import { useProtectedRequest } from "../../../../hooks/useProtectedRequest";
 
 export function useFetchUserName() {
-  const query = useProtectedRequest<{ userName: string }>("User/main");
+  const query = useProtectedRequest<{ userName: string }>("User/start");
 
   return {
     fetchUserName: query.mutate,

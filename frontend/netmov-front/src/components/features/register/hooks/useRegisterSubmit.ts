@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegisterUser } from "../api/useRegisterUser";
-import { RegisterFormInputs } from "../../../validations/registerSchema";
+import { RegisterFormInputs } from "../../../../validations/registerSchema";
 
 export const useRegisterSubmit = () => {
   const navigate = useNavigate();
