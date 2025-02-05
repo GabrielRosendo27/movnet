@@ -1,4 +1,4 @@
-import { MainMenu } from "../../../menu/MainMenu";
+import { MainMenu } from "../../../ui/menu/MainMenu";
 import { useUserMovies } from "../api/userMovies"; // Ou o caminho correto
 import { MovieCard } from "./MovieCard"; // Componente assumido
 import { Spinner } from "../../../../assets/Spinner"; // Componente de loading

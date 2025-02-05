@@ -1,4 +1,4 @@
-import { MainMenu } from "../../menu/MainMenu";
+import { MainMenu } from "../../ui/menu/MainMenu";
 import { useUsername } from "./hooks/useUsername";
 
 export function Main() {

@@ -1,62 +1,18 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "../ui/buttons/Button";
-import { useEffect, useRef, useState } from "react";
-import { Input } from "../ui/form/Input";
-import { useAddMovie } from "../../hooks/useAddMovie";
+import { Button } from "../../buttons/Button";
+import { Input } from "../../form/Input";
+import { useActionNavigation } from "../../../../hooks/useActionNavigation";
+import { useInputHandling } from "../hooks/useInputHandling";
+import { useMovieAddition } from "../hooks/useMovieAddition";
 
-// import { Spinner } from "../../assets/Spinner";
+export function StartMenu() {
+  const { handleActionNavigation } = useActionNavigation();
 
-export function MainMenu() {
-  const navigate = useNavigate();
+  const { showInput, setShowInput, inputRef, inputElementRef } = useInputHandling();
 
-  const { mutate, isPending, isError, error } = useAddMovie();
-  const [showInput, setShowInput] = useState(false);
-  const [movieName, setMovieName] = useState("");
+  const { movieName, setMovieName, handleAddMovie, isPending, isError, error, validationError } = useMovieAddition();
 
-  function onClick(route: string) {
-    navigate(route);
-  }
-
-  const inputRef = useRef<HTMLDivElement>(null);
-  const inputElementRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
-        setShowInput(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (showInput && inputElementRef.current) {
-      inputElementRef.current.focus();
-    }
-  }, [showInput]);
-
-  const handleAddMovie = () => {
-    if (movieName.trim() === "") {
-      alert("Por favor, digite o nome do filme.");
-      return;
-    }
-
-    mutate(
-      { title: movieName },
-      {
-        onSuccess: () => {
-          alert("Filme adicionado com sucesso!");
-          setMovieName("");
-          setShowInput(false);
-        },
-        onError: (error) => {
-          alert(error.message || "Erro ao adicionar filme");
-        },
-      }
-    );
+  const handleAddMovieWithValidation = () => {
+    handleAddMovie(() => setShowInput(false));
   };
 
   return (
@@ -66,7 +22,7 @@ export function MainMenu() {
           <Button
             text="Movnet"
             className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
-            onClick={() => onClick("/main")}
+            onClick={() => handleActionNavigation("/start")}
           />
         </li>
         <li>
@@ -90,10 +46,11 @@ export function MainMenu() {
                 <Button
                   text={isPending ? "Adicionando..." : "Adicionar"}
                   className={`px-4 py-2 text-sm text-white hover:bg-indigo-800 mb-5 ml-4 ${isPending ? "bg-gray-500" : "bg-myOrange"}`}
-                  onClick={handleAddMovie}
+                  onClick={handleAddMovieWithValidation}
                   disabled={isPending}
                 />
               </div>
+              {validationError && <p className="text-red-500 text-sm mt-1">{validationError}</p>}
               {isError && <p className="text-red-500 text-sm mt-1">{error?.message}</p>}
             </div>
           </div>
@@ -102,7 +59,7 @@ export function MainMenu() {
           <Button
             text="Minha Lista"
             className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
-            onClick={() => onClick("/userlist")}
+            onClick={() => handleActionNavigation("/userlist")}
           />
         </li>
       </ul>

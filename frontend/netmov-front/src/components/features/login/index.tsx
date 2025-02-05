@@ -1,7 +1,7 @@
 import { Button } from "../../ui/buttons/Button";
 import { Input } from "../../ui/form/Input";
-import { useLoginUser } from "./api/useLoginUser";
-import { Menu } from "../../menu/Menu";
+import { useLoginUser } from "./api/loginUser";
+import { Menu } from "../../ui/menu/components/Menu";
 import { Spinner } from "../../../assets/Spinner";
 import { useLoginForm } from "./hooks/useLoginForm";
 import { useActionNavigation } from "../../../hooks/useActionNavigation";

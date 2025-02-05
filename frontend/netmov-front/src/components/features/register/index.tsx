@@ -1,7 +1,7 @@
 import { Input } from "../../ui/form/Input";
 import { Button } from "../../ui/buttons/Button";
 import { useRegisterForm } from "./hooks/useRegisterForm";
-import { Menu } from "../../menu/Menu";
+import { Menu } from "../../ui/menu/components/Menu";
 import { Spinner } from "../../../assets/Spinner";
 import { useRegisterSubmit } from "./hooks/useRegisterSubmit";
 

@@ -5,6 +5,9 @@ export const useActionNavigation = () => {
 
   const handleActionNavigation = (action: string) => {
     const routes: { [key: string]: string } = {
+      login: "/login",
+      userlist: "/userlist",
+      start: "/start",
       register: "/register",
       home: "/",
     };
