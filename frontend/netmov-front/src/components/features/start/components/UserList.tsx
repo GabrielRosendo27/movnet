@@ -1,4 +1,4 @@
-import { MainMenu } from "../../../ui/menu/MainMenu";
+import { StartMenu } from "../../../ui/menu/components/StartMenu";
 import { useUserMovies } from "../api/userMovies"; // Ou o caminho correto
 import { MovieCard } from "./MovieCard"; // Componente assumido
 import { Spinner } from "../../../../assets/Spinner"; // Componente de loading
@@ -8,7 +8,7 @@ export function UserList() {
 
   return (
     <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center gap-5">
-      <MainMenu />
+      <StartMenu />
 
       <div className="border border-gray-900 w-[600px] h-[500px] p-4 flex flex-col">
         <h2 className="text-2xl mb-4 font-bold">Minha Lista</h2>

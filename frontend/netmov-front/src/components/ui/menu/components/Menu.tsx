@@ -10,7 +10,7 @@ export function Menu() {
           <Button
             text="Movnet"
             className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
-            onClick={() => handleActionNavigation("/")}
+            onClick={() => handleActionNavigation("home")}
           />
         </li>
         <li>
@@ -21,10 +21,10 @@ export function Menu() {
         </li>
         <div className="flex gap-5">
           <li>
-            <Button text="Entrar" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800" onClick={() => handleActionNavigation("/login")} />
+            <Button text="Entrar" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800" onClick={() => handleActionNavigation("login")} />
           </li>
           <li>
-            <Button text="Cadastrar-se" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800" onClick={() => handleActionNavigation("/register")} />
+            <Button text="Cadastrar-se" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800" onClick={() => handleActionNavigation("register")} />
           </li>
         </div>
       </ul>

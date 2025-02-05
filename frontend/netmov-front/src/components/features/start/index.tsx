@@ -1,4 +1,4 @@
-import { MainMenu } from "../../ui/menu/MainMenu";
+import { StartMenu } from "../../ui/menu/components/StartMenu";
 import { useUsername } from "./hooks/useUsername";
 
 export function Main() {
@@ -7,7 +7,7 @@ export function Main() {
   return (
     <>
       <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center">
-        <MainMenu />
+        <StartMenu />
         <div>{isLoading && <p>carregando...</p>}</div>
         <div>{error && <p>{error.message}</p>}</div>
         <div>usuário: {userName}</div>
