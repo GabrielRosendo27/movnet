@@ -141,22 +141,22 @@ public class UserController(AppDbContext context) : ControllerBase
                     }
 
             var user = await _context.Users
-                .Include(u => u.UserMovies)
+                .Include(u => u.UserMovies!)
                 .ThenInclude(um => um.Movie)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (user == null)
                 return NotFound("Usuário não encontrado");
 
-            var movies = user.UserMovies
+            var movies = user.UserMovies!
             .OrderByDescending(um => um.DateAdded)
             .Select(um => new MovieDTO
             {
-                Id = um.Movie.Id,
-                Title = um.Movie.Title,
+                Id = um.MovieId,
+                Title = um.Movie!.Title,
                 OriginalTitle = um.Movie.OriginalTitle,
                 Overview = um.Movie.Overview,
-                Year = (int)um.Movie.Year
+                Year = (int)um.Movie.Year!
                 // Mapear outras propriedades conforme necessário
             })
             .ToList();

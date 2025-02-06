@@ -3,7 +3,7 @@ using backend.models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-namespace backend.controllers{
+namespace backend.src.controllers{
 
 
 [ApiController]
@@ -47,14 +47,14 @@ public class MovieController : ControllerBase
           if(tmdbResults == null){
             return NotFound("Filme não encontrado.");
           }
-          var tmdbId = (int)tmdbResults["id"];
-          var tmdbTitle = (string)tmdbResults["title"];
-          var tmdbOriginalTitle = (string)tmdbResults["original_title"];
-          var tmdbOverview = (string)tmdbResults["overview"];
-          var tmdbPosterPath = (string)tmdbResults["poster_path"];
+          var tmdbId = (int)tmdbResults["id"]!;
+          var tmdbTitle = (string)tmdbResults["title"]!;
+          var tmdbOriginalTitle = (string)tmdbResults["original_title"]!;
+          var tmdbOverview = (string)tmdbResults["overview"]!;
+          var tmdbPosterPath = (string)tmdbResults["poster_path"]!;
          
            var omdbApiKey = "3d49971e";
-          var omdbUrl = $"http://www.omdbapi.com/?t={Uri.EscapeDataString(tmdbOriginalTitle)}&apikey={omdbApiKey}";
+          var omdbUrl = $"http://www.omdbapi.com/?t={Uri.EscapeDataString(tmdbOriginalTitle!)}&apikey={omdbApiKey}";
            var omdbResponse = await _httpClient.GetAsync(omdbUrl);
             if (!omdbResponse.IsSuccessStatusCode)
               {
@@ -68,9 +68,9 @@ public class MovieController : ControllerBase
           int? year = null;
           if (int.TryParse(omdbYear, out int parsedYear))
           year = parsedYear;
-          var omdbGenre = (string)omdbData["Genre"];
-          var omdbImdbRating = (string)omdbData["imdbRating"];
-          var omdbPoster = (string)omdbData["Poster"];
+          var omdbGenre = (string)omdbData["Genre"]!;
+          var omdbImdbRating = (string)omdbData["imdbRating"]!;
+          var omdbPoster = (string)omdbData["Poster"]!;
           var omdbRatings = omdbData["Ratings"] as JArray;
           var runtimeString = omdbData["Runtime"]?.ToString();
           int? omdbRuntime = null;
@@ -83,12 +83,12 @@ public class MovieController : ControllerBase
                     omdbRuntime = parsedRuntime;
                 }
             }
-          var omdbRottenRating = omdbRatings?.FirstOrDefault(r => (string)r["Source"] == "Rotten Tomatoes")?["Value"]?.ToString();
+          var omdbRottenRating = omdbRatings?.FirstOrDefault(r => (string)r["Source"]! == "Rotten Tomatoes")?["Value"]?.ToString();
 
          var newMovie = new MovieModel
             {
                 TMDBId = tmdbId,
-                Title = tmdbTitle,
+                Title = tmdbTitle!,
                 OriginalTitle = tmdbOriginalTitle,
                 Overview = tmdbOverview,
                 Runtime = omdbRuntime,
@@ -104,8 +104,8 @@ public class MovieController : ControllerBase
               _context.Movies.Add(newMovie);
               await _context.SaveChangesAsync();
           }
-          catch (DbUpdateException ex)
-          {
+          catch (DbUpdateException)
+            {
               // Log do erro
               return Conflict("Filme já existe no banco.");
           }

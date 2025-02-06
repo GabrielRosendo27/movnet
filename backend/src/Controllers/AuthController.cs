@@ -72,8 +72,8 @@ namespace backend.src.controllers
         [HttpPost("refresh-token")]
         public ActionResult<object> RefreshToken([FromBody] RefreshTokenRequest request)
         {
-            var principal = GetPrincipalFromExpiredToken(request.AccessToken);
-            var userId = int.Parse(principal.FindFirstValue(JwtRegisteredClaimNames.Sub));
+            var principal = GetPrincipalFromExpiredToken(request.AccessToken!);
+            var userId = int.Parse(principal.FindFirstValue(JwtRegisteredClaimNames.Sub)!);
             
             var user = _context.Users.FirstOrDefault(u => u.Id == userId);
             
