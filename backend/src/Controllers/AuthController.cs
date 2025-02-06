@@ -40,7 +40,7 @@ namespace backend.src.controllers
                 refreshToken
             });
         }
-        private string GenerateJwtToken(UserModel user)
+        private static string GenerateJwtToken(UserModel user)
 {
     JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Remove(JwtRegisteredClaimNames.Sub);
     var claims = new[]{
@@ -62,7 +62,7 @@ namespace backend.src.controllers
     return new JwtSecurityTokenHandler().WriteToken(token);
 }
 
-      private string GenerateRefreshToken()
+      private static string GenerateRefreshToken()
       {
           var randomNumber = new byte[64];
           using var rng = RandomNumberGenerator.Create();
@@ -94,7 +94,7 @@ namespace backend.src.controllers
             });
         }
 
-        [HttpPost("revoke-token")]
+        [HttpPost("logout")]
         [Authorize]
         public IActionResult RevokeToken()
         {

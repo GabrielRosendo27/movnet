@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../../../hooks/useAuthContext";
-import { API_ENDPOINTS } from "../../../../config/api";
+import { API_ENDPOINTS } from "../../../../api/api";
 import { LoginData, LoginResponse } from "../types/types";
 
 export function useLoginUser() {

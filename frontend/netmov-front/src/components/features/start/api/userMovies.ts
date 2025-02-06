@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { API_ENDPOINTS } from "../../../../config/api";
+import { API_ENDPOINTS } from "../../../../api/api";
 import { Movie } from "../types/types";
 
 export const useUserMovies = () => {

@@ -1,4 +1,4 @@
-import { API_ENDPOINTS } from "../config/api";
+import { API_ENDPOINTS } from "./api";
 import { AddMovieResponse, AddMovieType } from "../types/movieTypes";
 import { addResponse } from "../components/features/start/api/addResponse";
 

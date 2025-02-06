@@ -15,17 +15,16 @@ public class UserController(AppDbContext context) : ControllerBase
   {
       private readonly AppDbContext _context = context;
 
-        [HttpGet]
-      
-      public ActionResult<List<UserModel>> SearchUsers(){
-        var users = _context.Users.Take(1).ToList();
+    [HttpGet]
+      public async Task<ActionResult<UserModel>> SearchUsers(){
+        var users = await _context.Users.Take(1).ToListAsync();
         return Ok(users);
       }
       
       
-      [HttpGet("main")]
+      [HttpGet("get-username")]
       [Authorize]
-      public ActionResult<object> GetUserDetails()
+      public async Task<object> GetUserName()
 {
     var authHeader = HttpContext.Request.Headers.Authorization.ToString();
     if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
@@ -46,7 +45,7 @@ public class UserController(AppDbContext context) : ControllerBase
             return Unauthorized("Token inválido ou expirado.");
         }
 
-        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         if (user == null)
         {
             return NotFound("Usuário não encontrado.");
@@ -77,7 +76,7 @@ public class UserController(AppDbContext context) : ControllerBase
        
         [HttpPost("movies/{movieId}")]
         [Authorize]
-        public async Task<IActionResult> AddMovieToUser(int movieId)
+        public async Task<ActionResult> AddMovieToUser(int movieId)
         {
             // Obter o usuário autenticado
             // var userIdString = User.FindFirstValue(JwtRegisteredClaimNames.Sub);

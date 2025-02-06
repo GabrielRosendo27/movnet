@@ -1,4 +1,4 @@
-import { API_ENDPOINTS } from "../../../../config/api";
+import { API_ENDPOINTS } from "../../../../api/api";
 import { AddMovieResponse } from "../../../../types/movieTypes";
 
 export const addResponse = async (movieId: string, token: string): Promise<AddMovieResponse> => {

@@ -8,19 +8,12 @@ namespace backend.src.controllers{
 
 [ApiController]
 [Route("api/[controller]")]
-public class MovieController : ControllerBase
+public class MovieController(AppDbContext context, HttpClient httpClient) : ControllerBase
 {
-  private readonly AppDbContext _context;  
-   private readonly HttpClient _httpClient;
+  private readonly AppDbContext _context = context;  
+   private readonly HttpClient _httpClient = httpClient;
 
-
-      public MovieController(AppDbContext context, HttpClient httpClient)  {
-        _context = context;
-        _httpClient = httpClient;
-      }
-
-
-     [HttpGet("{title}")]
+        [HttpGet("{title}")]
      public async Task<ActionResult<MovieModel>> GetMovie(string title)
      {
           if (string.IsNullOrWhiteSpace(title))
@@ -106,7 +99,7 @@ public class MovieController : ControllerBase
           }
           catch (DbUpdateException)
             {
-              // Log do erro
+              
               return Conflict("Filme já existe no banco.");
           }
 

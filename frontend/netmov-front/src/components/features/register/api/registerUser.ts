@@ -1,9 +1,8 @@
+import { API_ENDPOINTS } from "../../../../api/api";
 import { RegisterUserPayload } from "../types/types";
 
-const API_BASE = import.meta.env.MODE === "development" ? "http://localhost:5000" : "";
-
 export const registerUser = async (data: RegisterUserPayload) => {
-  const response = await fetch(`${API_BASE}/api/User`, {
+  const response = await fetch(`${API_ENDPOINTS.USER.REGISTER}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
