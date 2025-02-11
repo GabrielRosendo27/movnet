@@ -1,9 +1,10 @@
-using backend.data;
+
 using backend.models;
+using backend.src.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-namespace backend.src.controllers{
+namespace backend.src.Presentation.Movies{
 
 
 [ApiController]

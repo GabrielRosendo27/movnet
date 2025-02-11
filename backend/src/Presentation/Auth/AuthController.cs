@@ -1,137 +1,52 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using backend.data;
-using backend.models;
+using backend.src.Core.DTOs.Requests;
+using backend.src.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
-namespace backend.src.controllers
+namespace backend.src.Presentation.Auth
 {
-
-[ApiController]
-[Route("api/[controller]")]
-  public class AuthController(AppDbContext context, JwtService jwtService) : ControllerBase 
-  {
-    private readonly AppDbContext _context = context;
-    private readonly JwtService _jwtService = jwtService;
-    
-    [HttpPost("login")]
-        public ActionResult<object> Login(UserModel user)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController(IJwtService jwtService) : ControllerBase 
+    {
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginRequest request)
         {
-            var foundUser = _context.Users.FirstOrDefault(u => u.Email == user.Email);
-            if (foundUser == null || !BCrypt.Net.BCrypt.Verify(user.Password, foundUser.Password))
+            try
             {
-                return Unauthorized("E-mail ou senha inválidos.");
+                var response = jwtService.Login(request.Email, request.Password);
+                return Ok(response);
             }
-
-            var accessToken = _jwtService.GenerateJwtToken(foundUser);
-            var refreshToken = _jwtService.GenerateRefreshToken();
-
-            foundUser.RefreshToken = refreshToken;
-            foundUser.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
-            _context.SaveChanges();
-
-            return Ok(new
+            catch (UnauthorizedAccessException ex)
             {
-                token = accessToken,
-                refreshToken
-            });
+                return Unauthorized(ex.Message);
+            }
         }
-        private static string GenerateJwtToken(UserModel user)
-{
-    JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Remove(JwtRegisteredClaimNames.Sub);
-    var claims = new[]{
-        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
 
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sua-chave-secreta-super-segura-de-32-caracteres"));
-    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-    var token = new JwtSecurityToken(
-        issuer: "sua-aplicacao",
-        audience: "seus-usuarios",
-        claims: claims,
-        expires: DateTime.Now.AddMinutes(15), 
-        signingCredentials: creds
-    );
-
-    return new JwtSecurityTokenHandler().WriteToken(token);
-}
-
-      private static string GenerateRefreshToken()
-      {
-          var randomNumber = new byte[64];
-          using var rng = RandomNumberGenerator.Create();
-          rng.GetBytes(randomNumber);
-          return Convert.ToBase64String(randomNumber);
-      }
         [HttpPost("refresh-token")]
-        public ActionResult<object> RefreshToken([FromBody] RefreshTokenRequest request)
+        public IActionResult RefreshToken([FromBody] RefreshTokenRequest request)
         {
-            var principal = GetPrincipalFromExpiredToken(request.AccessToken!);
-            var userId = int.Parse(principal.FindFirstValue(JwtRegisteredClaimNames.Sub)!);
-            
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-            
-            if (user == null || user.RefreshToken != request.RefreshToken || user.RefreshTokenExpiry <= DateTime.UtcNow)
+            try
             {
-                return Unauthorized("Token inválido");
+                var response = jwtService.RefreshToken(request.AccessToken, request.RefreshToken);
+                return Ok(response);
             }
-
-            var newAccessToken = GenerateJwtToken(user);
-            var newRefreshToken = GenerateRefreshToken();
-            
-            user.RefreshToken = newRefreshToken;
-            _context.SaveChanges();
-
-            return Ok(new {
-                token = newAccessToken,
-                refreshToken = newRefreshToken
-            });
+            catch (SecurityTokenException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
 
         [HttpPost("logout")]
         [Authorize]
         public IActionResult RevokeToken()
         {
-            var userIdString = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-            if (!int.TryParse(userIdString, out int userId))
-            {
-                return BadRequest("ID do usuário inválido.");
-            }
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-
-            if (user == null) return BadRequest();
-            user.RefreshToken = null;
-            _context.SaveChanges();
-
+            var userId = int.Parse(User.FindFirstValue(JwtRegisteredClaimNames.Sub)!);
+            jwtService.RevokeToken(userId);
             return NoContent();
-        
         }
-
-        private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
-        {
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = true,
-                ValidateIssuer = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = "sua-aplicacao",     
-                ValidAudience = "seus-usuarios",
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sua-chave-secreta-super-segura-de-32-caracteres")),
-                ValidateLifetime = false 
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
-            return principal;
-            
-        }
-    
-
     }
 }
