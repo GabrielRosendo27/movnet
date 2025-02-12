@@ -1,4 +1,5 @@
-using backend.models;
+
+using backend.src.Core.Entities;
 
 namespace backend.src.Core.Interfaces.Repositories
 {

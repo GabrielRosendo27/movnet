@@ -1,4 +1,6 @@
-namespace backend.models  
+
+
+namespace backend.src.Core.Entities
 { 
 public class UserModel {
   public int Id { get; set; }

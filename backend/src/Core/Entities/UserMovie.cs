@@ -1,4 +1,5 @@
-namespace backend.models
+namespace backend.src.Core.Entities
+ 
 {
     public class UserMovie
     {

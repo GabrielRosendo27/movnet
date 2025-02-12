@@ -1,4 +1,5 @@
-using backend.models;
+
+using backend.src.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.src.Infrastructure.Data

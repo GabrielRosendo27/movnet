@@ -13,11 +13,11 @@ namespace backend.src.Presentation.Auth
     public class AuthController(IJwtService jwtService) : ControllerBase 
     {
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             try
             {
-                var response = jwtService.Login(request.Email, request.Password);
+                var response = await jwtService.Login(request.Email, request.Password);
                 return Ok(response);
             }
             catch (UnauthorizedAccessException ex)
@@ -27,11 +27,11 @@ namespace backend.src.Presentation.Auth
         }
 
         [HttpPost("refresh-token")]
-        public IActionResult RefreshToken([FromBody] RefreshTokenRequest request)
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
             try
             {
-                var response = jwtService.RefreshToken(request.AccessToken, request.RefreshToken);
+                var response = await jwtService.RefreshToken(request.AccessToken, request.RefreshToken);
                 return Ok(response);
             }
             catch (SecurityTokenException ex)
@@ -42,10 +42,10 @@ namespace backend.src.Presentation.Auth
 
         [HttpPost("logout")]
         [Authorize]
-        public IActionResult RevokeToken()
+        public async Task<IActionResult> RevokeToken()
         {
             var userId = int.Parse(User.FindFirstValue(JwtRegisteredClaimNames.Sub)!);
-            jwtService.RevokeToken(userId);
+            await jwtService.RevokeToken(userId);
             return NoContent();
         }
     }

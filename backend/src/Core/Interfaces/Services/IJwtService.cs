@@ -1,6 +1,6 @@
-using backend.models;
+
 using backend.src.Core.DTOs.Responses;
-using System.Threading.Tasks;
+using backend.src.Core.Entities;
 
 namespace backend.src.Core.Interfaces.Services
 {

@@ -1,3 +1,4 @@
+namespace backend.src.Core.DTOs.Requests;
 public class MovieDTO
 {
     public int Id { get; set; }

@@ -1,4 +1,4 @@
-namespace backend.src.Infrastructure.Services
+namespace backend.src.Core.DTOs.Responses
 {
   public class JwtSettings
   {

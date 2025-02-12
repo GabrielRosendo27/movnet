@@ -1,11 +1,17 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using backend.data;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using backend.src.Core.DTOs.Responses;
+using backend.src.Core.Interfaces.Repositories;
+using backend.src.Core.Interfaces.Services;
+using backend.src.Infrastructure.Data;
+using backend.src.Infrastructure.Repositories;
+using backend.src.Infrastructure.Services;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using backend.src.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,13 +19,19 @@ var configuration = builder.Configuration;
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddHttpClient();
 
-builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<IJwtService, JwtService>(); 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -49,18 +61,18 @@ builder.Services.AddCors(options =>
 
 
 
-
-var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(options => {
+    var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
     options.TokenValidationParameters = new TokenValidationParameters {
             ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings?.Issuer,
-        ValidAudience = jwtSettings?.Audience,
+        ValidIssuer = jwtSettings!.Issuer,
+        ValidAudience = jwtSettings.Audience,
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(jwtSettings?.SecretKey!)),
+            Encoding.UTF8.GetBytes(jwtSettings.SecretKey!)),
         NameClaimType = JwtRegisteredClaimNames.Sub
             
     };
@@ -74,10 +86,12 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(options => {
 
 
 var app = builder.Build();
+
 using (var scope = app.Services.CreateScope()) {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
 }
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -89,7 +103,16 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = string.Empty;
     });
 }
-
+app.UseExceptionHandler(exceptionHandlerApp => 
+{
+    exceptionHandlerApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/json";
+        var error = new ErrorResponse("Ocorreu um erro interno");
+        await context.Response.WriteAsJsonAsync(error);
+    });
+});
 // app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowAll");

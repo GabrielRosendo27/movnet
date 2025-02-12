@@ -7,10 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.data;
+using backend.src.Infrastructure.Data;
 
 #nullable disable
 
-namespace backend.Migrations
+namespace backend.data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20250130123504_Token")]

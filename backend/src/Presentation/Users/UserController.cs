@@ -1,12 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using backend.data;
-using backend.models;
+using backend.src.Core.DTOs.Requests;
+using backend.src.Core.Entities;
+using backend.src.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.src.controllers
+namespace backend.src.Presentation.Users
 {
 
 [ApiController]

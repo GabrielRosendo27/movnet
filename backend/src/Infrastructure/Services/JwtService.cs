@@ -3,11 +3,11 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using backend.models;
 using Microsoft.Extensions.Options;
 using backend.src.Core.Interfaces.Repositories;
 using backend.src.Core.Interfaces.Services;
 using backend.src.Core.DTOs.Responses;
+using backend.src.Core.Entities;
 
 namespace backend.src.Infrastructure.Services{
 public class JwtService(
@@ -18,30 +18,31 @@ public class JwtService(
     private readonly IUserRepository _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
 
         public async Task<AuthResponse> Login (string email, string password){
-      var user = await _userRepository.GetByEmailAsync(email);
-        
-        if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
-            throw new UnauthorizedAccessException("Credenciais inválidas");
-        
-        var accessToken = GenerateJwtToken(user);
-        var refreshToken = GenerateRefreshToken();
-        
-        user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
-        _userRepository.Update(user);
-        await _userRepository.SaveChangesAsync();
 
-        return new AuthResponse(accessToken, refreshToken);
+            var user = await _userRepository.GetByEmailAsync(email);
+        
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
+                throw new UnauthorizedAccessException("Credenciais inválidas");
+        
+            var accessToken = GenerateJwtToken(user);
+            var refreshToken = GenerateRefreshToken();
+            
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiry = DateTime.UtcNow.AddMinutes(15);
+            _userRepository.Update(user);
+            await _userRepository.SaveChangesAsync();
+
+            return new AuthResponse(accessToken, refreshToken);
     }
      public string GenerateJwtToken(UserModel user)
     {
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new (JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings!.SecretKey!));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
@@ -63,17 +64,17 @@ public class JwtService(
     }
      public async Task<AuthResponse> RefreshToken(string accessToken, string refreshToken)
     {
-        if (string.IsNullOrEmpty(accessToken)) 
-            throw new ArgumentNullException(nameof(accessToken));
-        var principal = GetPrincipalFromExpiredToken(accessToken);
-        if (string.IsNullOrEmpty(refreshToken))
-        throw new ArgumentNullException(nameof(refreshToken));
         
-        var userId = int.Parse(principal.FindFirstValue(JwtRegisteredClaimNames.Sub)!);
+        var principal = GetPrincipalFromExpiredToken(accessToken);
+       
+        
+        var userId = int.Parse(principal.FindFirstValue(JwtRegisteredClaimNames.Sub));
         
         var user = await _userRepository.GetByIdAsync(userId);
+        
         if (string.IsNullOrEmpty(accessToken) || string.IsNullOrEmpty(refreshToken))
-        throw new ArgumentException("Tokens inválidos"); //
+        throw new ArgumentException("Tokens inválidos"); 
+
         if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiry <= DateTime.UtcNow)
             throw new SecurityTokenException("Token inválido");
 
@@ -105,7 +106,7 @@ public class JwtService(
             ValidateIssuerSigningKey = true,
             ValidIssuer = _settings!.Issuer,
             ValidAudience = _settings.Audience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey!)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey)),
             ValidateLifetime = false
         };
 

@@ -1,5 +1,5 @@
 
-using backend.models;
+using backend.src.Core.Entities;
 using backend.src.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
