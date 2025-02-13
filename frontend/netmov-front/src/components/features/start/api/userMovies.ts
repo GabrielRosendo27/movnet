@@ -6,7 +6,7 @@ export const useUserMovies = () => {
   return useQuery<Movie[]>({
     queryKey: ["userMovies"],
     queryFn: async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
       const response = await fetch(API_ENDPOINTS.USER.MOVIES, {
         headers: {
           Authorization: `Bearer ${token}`,

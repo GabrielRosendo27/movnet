@@ -12,6 +12,6 @@ export const API_ENDPOINTS = {
     REGISTER: `${API_BASE_URL}/api/User`,
     GETUSERNAME: `${API_BASE_URL}/api/User/get-username`,
     MOVIES: `${API_BASE_URL}/api/User/movies`,
-    MOVIEID: (movieId: number) => `${API_BASE_URL}/api/User/movies${movieId}`,
+    MOVIEID: (movieId: number) => `${API_BASE_URL}/api/User/movies/${movieId}`,
   },
 };

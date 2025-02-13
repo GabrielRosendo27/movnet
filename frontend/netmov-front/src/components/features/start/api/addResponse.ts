@@ -1,8 +1,8 @@
 import { API_ENDPOINTS } from "../../../../api/api";
 import { AddMovieResponse } from "../../../../types/movieTypes";
 
-export const addResponse = async (movieId: string, token: string): Promise<AddMovieResponse> => {
-  const response = await fetch(`${API_ENDPOINTS.USER.MOVIES}/${movieId}`, {
+export const addResponse = async (movieId: number, token: string): Promise<AddMovieResponse> => {
+  const response = await fetch(`${API_ENDPOINTS.USER.MOVIEID(movieId)}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,6 +19,8 @@ export const addResponse = async (movieId: string, token: string): Promise<AddMo
       throw new Error(errorText || "Erro desconhecido");
     }
   }
-
+  if (response) {
+    console.log("Resposta método addResponse: ", response);
+  }
   return response.json();
 };

@@ -23,7 +23,7 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
           var existingMovie = await _context.Movies
             .FirstOrDefaultAsync(m => EF.Functions.ILike(m.Title, title));
           if (existingMovie != null)
-            return Ok(existingMovie);
+            return Conflict("O filme já está na lista.");
 
           var tmdbApiKey = "88740fcede037c6631f0d94c508f0454"; 
           var tmdbUrl = $"https://api.themoviedb.org/3/search/movie?query={Uri.EscapeDataString(title)}&api_key={tmdbApiKey}&language=pt-BR";
@@ -82,7 +82,7 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
          var newMovie = new MovieModel
             {
                 TMDBId = tmdbId,
-                Title = tmdbTitle!,
+                Title = tmdbTitle,
                 OriginalTitle = tmdbOriginalTitle,
                 Overview = tmdbOverview,
                 Runtime = omdbRuntime,
