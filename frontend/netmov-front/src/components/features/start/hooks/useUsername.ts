@@ -2,10 +2,12 @@ import { useEffect } from "react";
 import { useFetchUserName } from "./useFetchUsername";
 
 export function useUsername() {
-  const { fetchUserName, isLoading, error, userName } = useFetchUserName();
+  const { fetchUserName, isPending, error, userName } = useFetchUserName();
+
   useEffect(() => {
     fetchUserName();
-  }, [fetchUserName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  return { fetchUserName, isLoading, error, userName };
+  return { isPending, error, userName };
 }

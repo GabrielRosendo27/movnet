@@ -1,26 +1,23 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { API_ENDPOINTS } from "../api/api";
 
-const API_BASE_URL = "http://localhost:5000";
-
-export function useProtectedRequest<T>(endpoint: string, options?: RequestInit) {
+export function useProtectedRequest<T>(options?: RequestInit) {
   const token = localStorage.getItem("authToken");
 
-  return useMutation<T, Error, void>({
-    mutationFn: async () => {
-      const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
-        method: options?.method || "GET",
+  return useQuery<T, Error>({
+    queryKey: ["protected-data"],
+    queryFn: async () => {
+      if (!token) throw new Error("Token não encontrado");
+      const response = await fetch(`${API_ENDPOINTS.USER.GETUSERNAME}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
-          ...options?.headers,
         },
         ...options,
       });
 
-      if (!response.ok) {
-        throw new Error("Erro ao acessar rota protegida");
-      }
-
+      if (!response.ok) throw new Error("Erro ao acessar rota protegida");
       return response.json();
     },
   });

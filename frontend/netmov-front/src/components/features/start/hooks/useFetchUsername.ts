@@ -1,12 +1,15 @@
 import { useProtectedRequest } from "../../../../hooks/useProtectedRequest";
 
 export function useFetchUserName() {
-  const query = useProtectedRequest<{ userName: string }>("User/start");
+  const { data, isPending, error, refetch } = useProtectedRequest<{ userName: string }>();
 
+  const fetchUserName = () => {
+    refetch();
+  };
   return {
-    fetchUserName: query.mutate,
-    isLoading: query.isPending,
-    error: query.error,
-    userName: query.data?.userName,
+    isPending,
+    userName: data?.userName,
+    error,
+    fetchUserName,
   };
 }

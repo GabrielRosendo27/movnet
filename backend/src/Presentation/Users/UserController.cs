@@ -23,25 +23,20 @@ public class UserController(AppDbContext context) : ControllerBase
         }
         [HttpGet("get-username")]
         [Authorize]
-        public async Task<object> GetUserName()
+        public async Task<ActionResult<string>> GetUserName()
         {
-            var authHeader = HttpContext.Request.Headers.Authorization.ToString();
-            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer ")) return Unauthorized("Token não encontrado ou inválido.");          
-            var token = authHeader["Bearer ".Length..].Trim();
-            var handler = new JwtSecurityTokenHandler();
-            try
-            {
-                var jwtToken = handler.ReadToken(token) as JwtSecurityToken;
-                var userIdString = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-                if (userIdString == null || !int.TryParse(userIdString, out int userId)) return Unauthorized("Token inválido ou expirado.");
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
-                if (user == null) return NotFound("Usuário não encontrado.");              
-                return Ok(new { userName = user.User });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro ao processar o token: {ex.Message}");
-            }
+            // var userIdString = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");         
+            Console.WriteLine("############################# === ##########################");
+            Console.WriteLine(userIdString);
+
+            if (userIdString == null || !int.TryParse(userIdString, out int userId)) 
+                return Unauthorized("Token inválido ou expirado.");
+            
+            var user = await _context.Users.FindAsync(userId);
+            Console.WriteLine($"Buscando usuário ID: {userId}");
+            Console.WriteLine($"Usuário encontrado: {user != null}");
+            return user == null ? NotFound("Usuário não encontrado.") : Ok(new { userName = user.User });
         }
 
       [HttpPost]

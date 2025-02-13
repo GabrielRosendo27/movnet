@@ -9,9 +9,9 @@ export const API_ENDPOINTS = {
     GET_BY_NAME: (movieName: string) => `${API_BASE_URL}/api/Movie/${encodeURIComponent(movieName)}`, // GET Título para buscar filme retornando filme
   },
   USER: {
-    REGISTER: `${API_BASE_URL}/api/User`, // POST registro de usuário
-    GETUSERNAME: `${API_BASE_URL}/api/User/get-username`, // GET retornar nome de usuário
-    MOVIES: `${API_BASE_URL}/api/User/movies`, // GET retorna lista de filmes
-    MOVIEID: (movieId: number) => `${API_BASE_URL}/api/User/movies${movieId}`, // POST Adicionar relação usuário/filme
+    REGISTER: `${API_BASE_URL}/api/User`,
+    GETUSERNAME: `${API_BASE_URL}/api/User/get-username`,
+    MOVIES: `${API_BASE_URL}/api/User/movies`,
+    MOVIEID: (movieId: number) => `${API_BASE_URL}/api/User/movies${movieId}`,
   },
 };

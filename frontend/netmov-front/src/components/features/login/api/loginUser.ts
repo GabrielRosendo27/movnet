@@ -20,9 +20,6 @@ export function useLoginUser() {
     });
 
     const data = await response.json();
-    if (response.ok) {
-      localStorage.setItem("token", data.token);
-    }
     if (!response.ok) {
       throw new Error("E-mail ou senha inválidos");
     }
@@ -32,10 +29,10 @@ export function useLoginUser() {
   const mutation = useMutation<LoginResponse, Error, LoginData>({
     mutationFn: loginRequest,
     onSuccess: (data) => {
-      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("authToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       login();
-      navigate("/main");
+      navigate("/start");
     },
     onError: (err: Error) => {
       setError(err.message || "Erro ao realizar login");

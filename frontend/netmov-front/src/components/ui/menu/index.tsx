@@ -3,7 +3,7 @@ import { useAuth } from "../../../hooks/useAuthContext";
 import { Button } from "../buttons/Button";
 import { StartMenu } from "./components/StartMenu";
 
-export function Index() {
+export function AuthenticatedMenu() {
   const { isAuthenticated } = useAuth();
   const { handleActionNavigation } = useActionNavigation();
   return (
