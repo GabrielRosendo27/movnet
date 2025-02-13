@@ -28,9 +28,9 @@ export function UserList() {
             {movies?.map((movie) => (
               <li key={movie.id}>
                 <MovieCard
-                  title={movie.Title}
-                  year={movie.Year}
-                  overview={movie.Overview}
+                  title={movie.title}
+                  year={movie.year}
+                  overview={movie.overview}
                   onRemove={() => {
                     /* Implementar remoção */
                   }}

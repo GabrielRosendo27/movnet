@@ -18,8 +18,9 @@ export const useUserMovies = () => {
         console.error("Erro na requisição:", errorMessage);
         throw new Error(errorMessage || "Falha ao carregar lista de filmes");
       }
-
-      return response.json();
+      const data = await response.json();
+      console.log("Dados recebidos de useUserMovies:", data);
+      return data;
     },
   });
 };

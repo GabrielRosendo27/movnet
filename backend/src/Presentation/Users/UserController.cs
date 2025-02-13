@@ -91,6 +91,7 @@ public class UserController(AppDbContext context) : ControllerBase
                 Year = (int)um.Movie.Year!
             })
             .ToList();
+            Console.WriteLine($"Número de filmes encontrados: {movies.Count}");
             return Ok(movies);
         }
     }

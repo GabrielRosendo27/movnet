@@ -9,9 +9,9 @@ export interface MovieCardProps {
 
 export interface Movie {
   id: number;
-  Title: string;
-  PosterPath: string;
-  Year: number;
+  title: string;
+  posterPath?: string;
+  year: number;
   IMDBRating: number;
-  Overview: string;
+  overview: string;
 }
