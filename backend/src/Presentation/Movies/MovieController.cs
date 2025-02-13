@@ -91,7 +91,10 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
                 Year = !string.IsNullOrEmpty(omdbYear) ? int.Parse(omdbYear) : null,
                 Genre = omdbGenre?.Split(", ").ToList(),
                 IMDBRating = !string.IsNullOrEmpty(omdbImdbRating) ? decimal.Parse(omdbImdbRating) : null,
-                RottenRating = !string.IsNullOrEmpty(omdbRottenRating) ? decimal.Parse(omdbRottenRating.TrimEnd('%')) / 100 : null
+                RottenRating = !string.IsNullOrEmpty(omdbRottenRating)
+                  ? int.Parse(omdbRottenRating.TrimEnd('%'))
+                  : null,
+
             };
             try
           {

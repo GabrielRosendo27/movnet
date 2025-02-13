@@ -1,17 +1,18 @@
-export interface MovieCardProps {
-  title: string;
-  year: number;
-  overview: string;
-  rating?: number;
-  posterUrl?: string;
-  onRemove?: () => void;
-}
-
 export interface Movie {
   id: number;
   title: string;
-  posterPath?: string;
   year: number;
-  IMDBRating: number;
-  overview: string;
+  genre: string[];
+  imdbRating: number;
+  rottenRating: number;
+  filePath?: string;
+}
+export interface MovieCardProps {
+  title: string;
+  year: number;
+  genre: string[];
+  imdbRating: number;
+  rottenRating: number;
+  filePath?: string;
+  onRemove?: () => void;
 }

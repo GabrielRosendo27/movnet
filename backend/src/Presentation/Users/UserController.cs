@@ -86,9 +86,13 @@ public class UserController(AppDbContext context) : ControllerBase
             {
                 Id = um.MovieId,
                 Title = um.Movie!.Title,
-                OriginalTitle = um.Movie.OriginalTitle,
-                Overview = um.Movie.Overview,
-                Year = (int)um.Movie.Year!
+                Year = (int)um.Movie.Year!,
+                Genre = um.Movie.Genre,
+                IMDBRating = um.Movie.IMDBRating,
+                RottenRatting = um.Movie.RottenRating,
+                FilePath = um.Movie.FilePath,
+
+                // Overview = um.Movie.Overview,
             })
             .ToList();
             Console.WriteLine($"Número de filmes encontrados: {movies.Count}");
