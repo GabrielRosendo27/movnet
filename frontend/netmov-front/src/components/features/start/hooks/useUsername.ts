@@ -9,5 +9,5 @@ export function useUsername() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { isPending, error, userName };
+  return { isLoading: isPending, usernameError: error, userName };
 }

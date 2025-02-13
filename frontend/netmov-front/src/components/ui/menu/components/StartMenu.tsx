@@ -3,6 +3,7 @@ import { Input } from "../../form/Input";
 import { useActionNavigation } from "../../../../hooks/useActionNavigation";
 import { useInputHandling } from "../hooks/useInputHandling";
 import { useMovieAddition } from "../hooks/useMovieAddition";
+import { useUsername } from "../../../features/start/hooks/useUsername";
 
 export function StartMenu() {
   const { handleActionNavigation } = useActionNavigation();
@@ -10,6 +11,8 @@ export function StartMenu() {
   const { showInput, setShowInput, inputRef, inputElementRef } = useInputHandling();
 
   const { movieName, setMovieName, handleAddMovie, isPending, isError, error, validationError } = useMovieAddition();
+
+  const { isLoading, usernameError, userName } = useUsername();
 
   const handleAddMovieWithValidation = () => {
     handleAddMovie(() => setShowInput(false));
@@ -61,6 +64,13 @@ export function StartMenu() {
             className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
             onClick={() => handleActionNavigation("userlist")}
           />
+        </li>
+        <li>
+          <Button
+            text={isLoading ? "Carregando..." : `Bem vindo ${userName}`}
+            className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
+          />
+          <p>{usernameError && usernameError?.message}</p>
         </li>
       </ul>
     </div>

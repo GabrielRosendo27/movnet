@@ -10,7 +10,6 @@ export function AuthenticatedMenu() {
     <div>
       {isAuthenticated ? (
         <div>
-          {" "}
           <StartMenu />
         </div>
       ) : (
