@@ -9,7 +9,6 @@ export function UserList() {
   return (
     <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center gap-5">
       <StartMenu />
-
       <div className="border border-gray-900 w-[600px] h-[500px] p-4 flex flex-col">
         <h2 className="text-2xl mb-4 font-bold">Minha Lista</h2>
 
@@ -27,7 +26,14 @@ export function UserList() {
 
             {movies?.map((movie) => (
               <li key={movie.id}>
-                <MovieCard title={movie.title} year={movie.year} genre={movie.genre} imdbRating={movie.imdbRating} rottenRating={movie.rottenRating} />
+                <MovieCard
+                  filePath={movie.filePath}
+                  title={movie.title}
+                  year={movie.year}
+                  genre={movie.genre}
+                  imdbRating={movie.imdbRating}
+                  rottenRating={movie.rottenRating}
+                />
               </li>
             ))}
           </ul>
