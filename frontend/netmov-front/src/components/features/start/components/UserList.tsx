@@ -7,17 +7,14 @@ export function UserList() {
   const { data: movies, isLoading, isError, error } = useUserMovies();
 
   return (
-    <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center gap-5">
+    <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center max-md:h-full">
       <StartMenu />
-      <div className="border border-gray-900 w-[600px] h-[500px] p-4 flex flex-col">
-        <h2 className="text-2xl mb-4 font-bold">Minha Lista</h2>
-
+      <div className="p-4 grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 w-full max-md:mt-48">
         {isLoading && (
           <div className="flex-1 flex items-center justify-center">
             <Spinner />
           </div>
         )}
-
         {isError && <div className="flex-1 flex items-center justify-center text-red-500">{error.message}</div>}
 
         {!isLoading && !isError && (
