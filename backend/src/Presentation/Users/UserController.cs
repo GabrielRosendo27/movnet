@@ -82,11 +82,12 @@ public class UserController(AppDbContext context) : ControllerBase
             if (user == null) return NotFound("Usuário não encontrado");
             var movies = user.UserMovies!
             .OrderByDescending(um => um.DateAdded)
+            .Where(um => um.Movie != null)
             .Select(um => new MovieDTO
             {
                 Id = um.MovieId,
                 Title = um.Movie!.Title,
-                Year = (int)um.Movie.Year!,
+                Year = um.Movie.Year,
                 Genre = um.Movie.Genre,
                 IMDBRating = um.Movie.IMDBRating,
                 RottenRatting = um.Movie.RottenRating,

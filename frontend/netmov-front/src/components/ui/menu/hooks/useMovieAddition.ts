@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useAddMovie } from "../../../../hooks/useAddMovie";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function useMovieAddition() {
+  const queryClient = useQueryClient();
   const { mutate, isPending, isError, error } = useAddMovie();
   const [movieName, setMovieName] = useState("");
   const [validationError, setValidationError] = useState("");
@@ -19,6 +21,7 @@ export function useMovieAddition() {
         onSuccess: () => {
           setMovieName("");
           onSuccess?.();
+          queryClient.invalidateQueries({ queryKey: ["userMovies"] });
         },
         onError: () => {
           setMovieName("");
