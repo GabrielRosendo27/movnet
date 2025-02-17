@@ -6,6 +6,7 @@ RUN npm ci --silent
 COPY . .
 RUN npm run build
 
+
 # Etapa de produção
 FROM nginx:1.25-alpine
 COPY --from=builder /app/dist /usr/share/nginx/html

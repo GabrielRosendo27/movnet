@@ -2,15 +2,22 @@ services:
   frontend:
     build:
       context: ../frontend/netmov-front
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
+      - VITE_API_BASE_URL=http://backend:80
+      - CHOKIDAR_USEPOLLING=true
     ports:
-      - "3000:80"
+      # - "3000:80"
+      - "5173:5173"
     depends_on:
       - backend
     networks:
       - movnet-network
+    volumes:
+      - ../frontend/netmov-front:/app
+      - /app/node_modules
+    command: npm run dev -- --host
   backend:
     build:
       context: ../backend
