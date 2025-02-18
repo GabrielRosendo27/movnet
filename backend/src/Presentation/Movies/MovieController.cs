@@ -20,11 +20,6 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
           if (string.IsNullOrWhiteSpace(title))
             return BadRequest("Título inválido.");
 
-          var existingMovie = await _context.Movies
-            .FirstOrDefaultAsync(m => EF.Functions.ILike(m.Title, title));
-          if (existingMovie != null)
-            return Conflict("O filme já está na lista.");
-
           var tmdbApiKey = "88740fcede037c6631f0d94c508f0454"; 
           var tmdbUrl = $"https://api.themoviedb.org/3/search/movie?query={Uri.EscapeDataString(title)}&api_key={tmdbApiKey}&language=pt-BR";
 
@@ -42,6 +37,11 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
             return NotFound("Filme não encontrado.");
           }
           var tmdbId = (int)tmdbResults["id"]!;
+          var existingMovie = await _context.Movies
+            .FirstOrDefaultAsync(m => m.TMDBId == tmdbId);
+           if (existingMovie != null) return Conflict(new {message = "O filme já está em sua lista."});
+
+
           var tmdbTitle = (string)tmdbResults["title"]!;
           var tmdbOriginalTitle = (string)tmdbResults["original_title"]!;
           var tmdbOverview = (string)tmdbResults["overview"]!;

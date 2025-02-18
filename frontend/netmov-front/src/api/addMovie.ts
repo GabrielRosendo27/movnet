@@ -14,10 +14,13 @@ export const AddMovie = async ({ title }: AddMovieType): Promise<AddMovieRespons
       Authorization: `Bearer ${token}`,
     },
   });
-
-  if (!response.ok) throw new Error("Erro ao pesquisar filme");
-
   const movieData = await response.json();
+
+  if (!response.ok) {
+    const errorMessage = movieData.message;
+    throw new Error(errorMessage);
+  }
+
   if (movieData) {
     console.log("Resposta método addMovie: ", movieData);
   }
