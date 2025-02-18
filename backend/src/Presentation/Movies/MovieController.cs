@@ -39,7 +39,7 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
           var tmdbId = (int)tmdbResults["id"]!;
           var existingMovie = await _context.Movies
             .FirstOrDefaultAsync(m => m.TMDBId == tmdbId);
-           if (existingMovie != null) return Conflict(new {message = "O filme já está em sua lista."});
+           if (existingMovie != null) return Ok(existingMovie);
 
 
           var tmdbTitle = (string)tmdbResults["title"]!;
