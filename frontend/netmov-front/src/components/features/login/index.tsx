@@ -36,7 +36,7 @@ export function Login() {
               {errors.password && <span className="text-red-500">{errors.password.message}</span>}
             </div>
 
-            <div className="flex items-center justify-center mb-2">{error && <p className="text-red-500 mt-2">Erro: {error}</p>}</div>
+            <div className="flex items-center justify-center mb-2">{error && <p className="text-red-500 mt-2">{error}</p>}</div>
             <Button
               text={isLoading ? <Spinner /> : "Entrar"}
               disabled={isLoading}

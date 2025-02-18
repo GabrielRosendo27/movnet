@@ -28,6 +28,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setIsAuthenticated(true);
   }
   function logout() {
+    localStorage.removeItem("authToken");
     setIsAuthenticated(false);
   }
 

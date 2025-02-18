@@ -22,7 +22,7 @@ namespace backend.src.Presentation.Auth
             }
             catch (UnauthorizedAccessException ex)
             {
-                return Unauthorized(ex.Message);
+                return Unauthorized(new {message = ex.Message});
             }
         }
 
@@ -44,7 +44,8 @@ namespace backend.src.Presentation.Auth
         [Authorize]
         public async Task<IActionResult> RevokeToken()
         {
-            var userId = int.Parse(User.FindFirstValue(JwtRegisteredClaimNames.Sub)!);
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");         
+            if (!int.TryParse(userIdString, out int userId)) return BadRequest("ID do usuário inválido.");
             await jwtService.RevokeToken(userId);
             return NoContent();
         }

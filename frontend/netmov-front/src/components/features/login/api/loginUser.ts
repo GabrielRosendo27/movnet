@@ -21,7 +21,7 @@ export function useLoginUser() {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error("E-mail ou senha inválidos");
+      throw new Error("E-mail ou Senha inválidos.");
     }
     return data;
   };

@@ -22,7 +22,7 @@ public class JwtService(
             var user = await _userRepository.GetByEmailAsync(email);
         
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
-                throw new UnauthorizedAccessException("Credenciais inválidas");
+                throw new UnauthorizedAccessException("E-mail ou Senha inválidos");
         
             var accessToken = GenerateJwtToken(user);
             var refreshToken = GenerateRefreshToken();
