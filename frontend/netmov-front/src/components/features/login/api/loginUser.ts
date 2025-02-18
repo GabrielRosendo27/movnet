@@ -32,7 +32,7 @@ export function useLoginUser() {
       localStorage.setItem("authToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       login();
-      navigate("/start");
+      navigate("/");
     },
     onError: (err: Error) => {
       setError(err.message || "Erro ao realizar login");

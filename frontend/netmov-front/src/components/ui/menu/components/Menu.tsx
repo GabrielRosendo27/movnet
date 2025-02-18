@@ -10,7 +10,7 @@ export function Menu() {
           <Button
             text="Movnet"
             className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
-            onClick={() => handleActionNavigation("home")}
+            onClick={() => handleActionNavigation("/")}
           />
         </li>
         <li>
