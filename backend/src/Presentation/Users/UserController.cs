@@ -90,10 +90,9 @@ public class UserController(AppDbContext context) : ControllerBase
                 Year = um.Movie.Year,
                 Genre = um.Movie.Genre,
                 IMDBRating = um.Movie.IMDBRating,
-                RottenRatting = um.Movie.RottenRating,
+                RottenRating = um.Movie.RottenRating,
                 FilePath = um.Movie.FilePath,
 
-                // Overview = um.Movie.Overview,
             })
             .ToList();
             Console.WriteLine($"Número de filmes encontrados: {movies.Count}");

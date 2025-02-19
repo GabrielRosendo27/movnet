@@ -6,7 +6,7 @@ public class MovieDTO
     public int? Year { get; set; }
     public List<string>? Genre { get; set; }
     public decimal? IMDBRating { get; set; }
-    public int? RottenRatting { get; set; }
+    public int? RottenRating { get; set; }
     public string? FilePath { get; set; }
-    // public string? Overview { get; set; }
+  
 }

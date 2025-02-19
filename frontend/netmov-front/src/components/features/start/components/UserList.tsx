@@ -5,7 +5,9 @@ import { Spinner } from "../../../../assets/Spinner"; // Componente de loading
 
 export function UserList() {
   const { data: movies, isLoading, isError, error } = useUserMovies();
-
+  if (movies) {
+    console.log("FILMES: ", movies[0].rottenRating);
+  }
   return (
     <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center max-md:h-full overflow-x-hidden">
       <StartMenu />

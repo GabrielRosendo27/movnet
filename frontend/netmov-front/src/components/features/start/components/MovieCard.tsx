@@ -11,8 +11,8 @@ export function MovieCard({ title, year, genre, imdbRating, rottenRating, filePa
         <div className="flex gap-1">
           <img src="star.svg" width={16} />
           <span className="mr-1">{imdbRating}</span>
-          <img src="star.svg" className="ml-1" width={16} />
-          <span>85%{rottenRating}</span>
+          <img src="tomato.svg" className="ml-1" width={16} />
+          <span>{rottenRating}</span>
         </div>
       </div>
     </div>
