@@ -9,7 +9,7 @@ export function UserList() {
     console.log("FILMES: ", movies[0].rottenRating);
   }
   return (
-    <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center max-md:h-full overflow-x-hidden">
+    <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center max-md:h-full overflow-x-hidden scroll-container">
       <StartMenu />
       <div className="p-4">
         {isLoading && (
@@ -26,9 +26,11 @@ export function UserList() {
               {movies?.map((movie) => (
                 <li key={movie.id} className="hover:bg-slate-900 cursor-pointer p-4">
                   <MovieCard
+                    id={movie.id}
                     filePath={movie.filePath}
                     title={movie.title}
                     year={movie.year}
+                    runtime={movie.runtime}
                     genre={movie.genre}
                     imdbRating={movie.imdbRating}
                     rottenRating={movie.rottenRating}

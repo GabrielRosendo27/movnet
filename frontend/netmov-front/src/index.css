@@ -8,6 +8,19 @@
   box-sizing: border-box;
   font-family: Poppins;
 }
+html {
+  scroll-behavior: smooth;
+}
+
+.scroll-container {
+  overflow: scroll; /* Permite o scroll */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari e Opera */
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {

@@ -83,15 +83,16 @@ public class UserController(AppDbContext context) : ControllerBase
             var movies = user.UserMovies!
             .OrderByDescending(um => um.DateAdded)
             .Where(um => um.Movie != null)
-            .Select(um => new MovieDTO
+            .Select((um, index) => new MovieDTO
             {
-                Id = um.MovieId,
+                Id = index + 1,
                 Title = um.Movie!.Title,
                 Year = um.Movie.Year,
                 Genre = um.Movie.Genre,
                 IMDBRating = um.Movie.IMDBRating,
                 RottenRating = um.Movie.RottenRating,
                 FilePath = um.Movie.FilePath,
+                Runtime = um.Movie.Runtime,
 
             })
             .ToList();

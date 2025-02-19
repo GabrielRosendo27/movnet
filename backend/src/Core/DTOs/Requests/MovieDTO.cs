@@ -8,5 +8,6 @@ public class MovieDTO
     public decimal? IMDBRating { get; set; }
     public int? RottenRating { get; set; }
     public string? FilePath { get; set; }
+    public int? Runtime { get; set; }
   
 }
