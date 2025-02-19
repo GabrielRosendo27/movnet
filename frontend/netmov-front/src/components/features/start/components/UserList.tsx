@@ -17,8 +17,8 @@ export function UserList() {
         )}
         {isError && <div className="flex-1 flex items-center justify-center text-red-500">{error.message}</div>}
         {!isLoading && !isError && (
-          <div>
-            <ul className="grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 w-screen p-6 max-md:mt-[335px]">
+          <div className="h-[calc(100vh-22rem)]">
+            <ul className="grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 w-screen p-6 ">
               {movies?.length === 0 && <li className="text-center text-gray-400 mt-10">Nenhum filme na lista</li>}
 
               {movies?.map((movie) => (
