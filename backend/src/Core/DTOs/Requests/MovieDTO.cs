@@ -2,6 +2,7 @@ namespace backend.src.Core.DTOs.Requests;
 public class MovieDTO
 {
     public int Id { get; set; }
+    public int MovieId { get; set; }
     public string? Title { get; set; }
     public int? Year { get; set; }
     public List<string>? Genre { get; set; }

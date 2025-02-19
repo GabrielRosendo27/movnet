@@ -7,9 +7,11 @@ export interface Movie {
   rottenRating: number;
   filePath?: string;
   runtime: number;
+  movieId: number;
 }
 export interface MovieCardProps {
   id: number;
+  movieId: number;
   title: string;
   year: number;
   genre: string[];
@@ -18,4 +20,5 @@ export interface MovieCardProps {
   filePath?: string;
   runtime: number;
   onRemove?: () => void;
+  isRemoving: boolean;
 }

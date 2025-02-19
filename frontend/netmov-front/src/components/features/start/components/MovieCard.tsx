@@ -1,6 +1,6 @@
 import { MovieCardProps } from "../types/types";
 
-export function MovieCard({ title, year, genre, imdbRating, rottenRating, filePath, runtime, id }: MovieCardProps) {
+export function MovieCard({ title, year, genre, imdbRating, rottenRating, filePath, runtime, id, onRemove, isRemoving }: MovieCardProps) {
   function formatRuntime(runtime: number) {
     const hours = Math.floor(runtime / 60);
     const minutes = runtime % 60;
@@ -40,6 +40,9 @@ export function MovieCard({ title, year, genre, imdbRating, rottenRating, filePa
           <span className="mr-1">{imdbRating}</span>
           <img src="tomato.svg" className="ml-1" width={16} />
           <span>{rottenRating}%</span>
+          <button onClick={onRemove} disabled={isRemoving}>
+            Remover Filme
+          </button>
         </div>
       </div>
     </div>

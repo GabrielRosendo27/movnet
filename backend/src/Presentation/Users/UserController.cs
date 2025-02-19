@@ -68,6 +68,29 @@ public class UserController(AppDbContext context) : ControllerBase
             await _context.SaveChangesAsync();
             return Ok(new { message = "Filme adicionado com sucesso" });
         }
+        [HttpDelete("movies/{movieId}")]
+        [Authorize]
+        public async Task<ActionResult> RemoveMovieFromUser(int movieId)
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                ?? User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+
+            if (!int.TryParse(userIdString, out int userId))
+                return BadRequest("ID do usuário inválido.");
+
+            var userMovie = await _context.UserMovies
+                .FirstOrDefaultAsync(um => um.UserId == userId && um.MovieId == movieId);
+                
+            if (userMovie == null)
+                return NotFound(new { message = "Filme não encontrado na sua lista." });
+
+            _context.UserMovies.Remove(userMovie);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Filme removido com sucesso." });
+        }
+
+
 
         [HttpGet("movies-list")]
         [Authorize]
@@ -86,6 +109,7 @@ public class UserController(AppDbContext context) : ControllerBase
             .Select((um, index) => new MovieDTO
             {
                 Id = index + 1,
+                MovieId = um.MovieId,
                 Title = um.Movie!.Title,
                 Year = um.Movie.Year,
                 Genre = um.Movie.Genre,
