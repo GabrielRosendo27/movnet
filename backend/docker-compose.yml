@@ -24,9 +24,9 @@ services:
       dockerfile: Dockerfile
     command: >
       sh -c "while ! nc -z postdb 5432; do sleep 2; done && dotnet backend.dll"
-    depends_on:
-      postdb:
-        condition: service_healthy
+    # depends_on:
+    #   postdb:
+    #     condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       # - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
