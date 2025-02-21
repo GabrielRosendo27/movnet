@@ -2,10 +2,10 @@ services:
   frontend:
     build:
       context: ../frontend/netmov-front
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     environment:
       - NODE_ENV=development
-      - VITE_API_BASE_URL=http://backend:80
+      - VITE_API_BASE_URL=http://15.228.127.149:5000
       - CHOKIDAR_USEPOLLING=true
     ports:
       # - "3000:80"
