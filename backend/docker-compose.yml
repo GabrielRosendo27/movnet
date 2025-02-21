@@ -28,13 +28,9 @@ services:
     #   postdb:
     #     condition: service_healthy
     environment:
-      # - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
       - ASPNETCORE_ENVIRONMENT=Production
-      - DB_HOST=database-1.c1o0aasqma33.sa-east-1.rds.amazonaws.com
-      - DB_PORT=5432
-      - DB_NAME=database-1
-      - DB_USER=movnet
-      - DB_PASSWORD=movnet123
+      - ConnectionStrings__DefaultConnection=Host=database-1.c1o0aasqma33.sa-east-1.rds.amazonaws.com;Port=5432;Database=database-1;Username=movnet;Password=movnet123;
+
     networks:
       - movnet-network
     # ports:
