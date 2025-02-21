@@ -3,33 +3,33 @@ services:
     build:
       context: ../frontend/netmov-front
       dockerfile: Dockerfile
-    environment:
-      - NODE_ENV=development
-      - VITE_API_BASE_URL=http://15.228.127.149:5000
-      - CHOKIDAR_USEPOLLING=true
+    # environment:
+    #   - NODE_ENV=development
+    #   - VITE_API_BASE_URL=http://15.228.127.149:5000
+    #   - CHOKIDAR_USEPOLLING=true
     ports:
-      # - "3000:80"
-      - "5173:5173"
+      - "80:80"
+    #   - "5173:5173"
     depends_on:
       - backend
     networks:
       - movnet-network
-    volumes:
-      - ../frontend/netmov-front:/app
-      - /app/node_modules
-    command: npm run dev -- --host
+    # volumes:
+    #   - ../frontend/netmov-front:/app
+    #   - /app/node_modules
+    # command: npm run dev -- --host
   backend:
     build:
       context: ../backend
       dockerfile: Dockerfile
-    command: >
-      sh -c "while ! nc -z postdb 5432; do sleep 2; done && dotnet backend.dll"
+    # command: >
+    #   sh -c "while ! nc -z postdb 5432; do sleep 2; done && dotnet backend.dll"
     # depends_on:
     #   postdb:
     #     condition: service_healthy
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
       # - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      - ASPNETCORE_ENVIRONMENT=Production
       - DB_HOST=database-1.c1o0aasqma33.sa-east-1.rds.amazonaws.com
       - DB_PORT=5432
       - DB_NAME=database-1
@@ -37,8 +37,8 @@ services:
       - DB_PASSWORD=movnet123
     networks:
       - movnet-network
-    ports:
-      - "5000:80"
+    # ports:
+    #   - "5000:80"
     volumes:
       - ./data-protection:/app/keys
   # postdb:
