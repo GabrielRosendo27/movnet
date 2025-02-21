@@ -7,8 +7,9 @@ services:
     #   - NODE_ENV=development
     #   - VITE_API_BASE_URL=http://15.228.127.149:5000
     #   - CHOKIDAR_USEPOLLING=true
-    # ports:
-    #   - "443:443"
+    ports:
+      - "80:80"
+      - "443:443"
     depends_on:
       - backend
     networks:
@@ -34,8 +35,8 @@ services:
 
     networks:
       - movnet-network
-    ports:
-      - "80"
+    # ports:
+    #   - "80"
     volumes:
       - ./data-protection:/app/keys
   # postdb:
