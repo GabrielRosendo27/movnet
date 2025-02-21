@@ -14,6 +14,8 @@ services:
       - backend
     networks:
       - movnet-network
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     # volumes:
     #   - ../frontend/netmov-front:/app
     #   - /app/node_modules
@@ -33,8 +35,8 @@ services:
 
     networks:
       - movnet-network
-    ports:
-      - "80"
+    # ports:
+    #   - "80"
     volumes:
       - ./data-protection:/app/keys
   # postdb:
