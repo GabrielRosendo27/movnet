@@ -29,31 +29,36 @@ services:
         condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      # - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      - DB_HOST=database-1.c1o0aasqma33.sa-east-1.rds.amazonaws.com
+      - DB_PORT=5432
+      - DB_NAME=database-1
+      - DB_USER=movnet
+      - DB_PASSWORD=movnet123
     networks:
       - movnet-network
     ports:
       - "5000:80"
     volumes:
       - ./data-protection:/app/keys
-  postdb:
-    image: postgres:latest
-    ports:
-      - "5432:5432"
-    restart: always
-    environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    networks:
-      - movnet-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+  # postdb:
+  #   image: postgres:latest
+  #   ports:
+  #     - "5432:5432"
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_USER=${DB_USER}
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD}
+  #     - POSTGRES_DB=${DB_NAME}
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   networks:
+  #     - movnet-network
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
 
   adminer:
     image: adminer

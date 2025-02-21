@@ -49,7 +49,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "http://frontend","http://frontend:80", "http://localhost:5173", "https://movnet-backend.onrender.com") 
+        policy.WithOrigins("http://localhost:3000", "http://frontend","http://frontend:80", "http://localhost:5173", "http://15.228.127.149") 
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials()
