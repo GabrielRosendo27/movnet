@@ -1,75 +1,73 @@
-MovieList Manager 🎬
-Status: Em Desenvolvimento
+# MovieList Manager 🎬
+
+![Status](https://img.shields.io/badge/status-em_desenvolvimento-yellow)
+
 Aplicação web para gerenciamento pessoal de listas de filmes, integrando dados de múltiplas fontes e oferecendo uma experiência personalizada aos usuários.
+Acessível em [movnet.tech](https://movnet.tech)
 
-✨ Funcionalidades Principais
-🧑‍💻 Autenticação de Usuários
-Criação de conta com e-mail/senha
+## ✨ Funcionalidades Principais
 
-Login seguro com JWT (JSON Web Tokens)
+### 🧑‍💻 Autenticação de Usuários
+- Criação de conta com e-mail/senha
+- Login seguro com JWT (JSON Web Tokens)
+- Gerenciamento de sessão do usuário
 
-🎥 Gerenciamento de Filmes
-Pesquisa de filmes por título
+### 🎥 Gerenciamento de Filmes
+- Pesquisa de filmes por título
+- Adição/remoção de filmes na lista pessoal
+- Persistência dos dados entre sessões
+- Organização personalizada de listas
 
-Adição/remoção de filmes na lista pessoal
+### 🌐 Integração com APIs Externas
+- Combinação de dados do TMDB (The Movie Database) e OMDB (Open Movie Database)
+- Metadados completos dos filmes:
+  - Ano de lançamento
+  - Título Original
+  - Duração
+  - Avaliações
+  - Sinopse
+  - Informações técnicas
 
-Persistência dos dados entre sessões
+## 🛠 Tecnologias Utilizadas
 
-🌐 Integração com APIs Externas
-Combinação de dados do TMDB (The Movie Database) e OMDB (Open Movie Database)
+### Frontend
+- **React/TypeScript**: Interface interativa com tipagem estática
+- **React Query**: Gerenciamento de estado e cache
+- **Zod**: Validação de esquemas de dados
+- **React Hook Form**: Gerenciamento performático de formulários
+- **React Router DOM**: Sistema de navegação entre páginas
+- **Tailwind CSS**: Estilização responsiva e moderna
 
-Metadados completos dos filmes (ano, direção, duração, avaliações, etc.)
+### Backend
+- **C#/.NET**: Construção de API robusta e escalável
+- **Entity Framework**: ORM para PostgreSQL
+- **Repository Pattern**: Abstração de acesso a dados
+- **Clean Architecture**: Separação de camadas
+- **JWT**: Autenticação segura
+- **Bcrypt**: Criptografia de senhas
 
-🛠 Tecnologias Utilizadas
-Frontend
-React/TypeScript: Biblioteca para construção de interfaces interativas e tipagem estática.
+### Infraestrutura
+- **PostgreSQL**: Banco de dados relacional
+- **Docker**: Containerização e ambiente consistente
+- **Swagger**: Documentação de API
 
-React Query: Gerenciamento de estado e cache de dados.
+## 🔍 Endpoints da API
 
-Zod: Validação de esquemas para garantir a integridade dos dados.
-
-React Hook Form: Gerenciamento de formulários de forma performática.
-
-React Router DOM: Roteamento para navegação entre páginas.
-
-Tailwind CSS: Framework CSS utilitário para criação de interfaces modernas e responsivas.
-
-Backend
-C# com .NET: Framework robusto para construção de APIs escaláveis.
-
-Entity Framework: ORM para interação com o banco de dados PostgreSQL.
-
-Repository Pattern: Padrão de design para abstrair a lógica de acesso a dados.
-
-Clean Architecture: Separação clara entre camadas (domínio, aplicação, infraestrutura).
-
-JWT: Autenticação segura de usuários.
-
-Bcrypt: Criptografia de senhas para armazenamento seguro.
-
-Banco de Dados
-PostgreSQL: Sistema de banco de dados relacional.
-
-Docker: Containerização da aplicação para consistência entre ambientes.
-
-🔍 Endpoints da API
-Usuário
-GET /api/User/get-username - Retorna o nome de usuário.
-
-GET /api/User/movies-list - Retorna a lista de filmes do usuário.
-
-POST /api/User - Registro de usuário.
-
-POST /api/User/movies/{movieId} - Adiciona filme à lista do usuário.
-
-DELETE /api/User/movies/{movieId} - Remove filme da lista do usuário.
-
-Autenticação
-POST /api/Auth/login - Realiza login do usuário.
-
-POST /api/Auth/refresh-token - Atualização de token JWT.
-
-POST /api/Auth/logout - Realiza logout do usuário.
-
-Filmes
-GET /api/Movie/{title} - Faz a requisição à API externa passando o título do filme e retorna os dados.
+### 👤 Usuário
+```bash
+GET    /api/User/get-username     # Obtém nome de usuário
+GET    /api/User/movies-list      # Lista filmes do usuário
+POST   /api/User                  # Registra novo usuário
+POST   /api/User/movies/{movieId} # Adiciona filme à lista
+DELETE /api/User/movies/{movieId} # Remove filme da lista
+```
+### 🔑 Autenticação
+```bash
+POST /api/Auth/login         # Login do usuário
+POST /api/Auth/refresh-token # Atualiza token JWT
+POST /api/Auth/logout        # Logout do usuário
+```
+### 🎬 Filmes
+```bash
+GET /api/Movie/{title}  # Busca filme por título (integração com APIs externas)
+```
