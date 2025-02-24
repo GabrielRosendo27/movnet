@@ -16,6 +16,8 @@ services:
       - movnet-network
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    restart: always
     # volumes:
     #   - ../frontend/netmov-front:/app
     #   - /app/node_modules
