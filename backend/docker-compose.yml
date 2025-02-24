@@ -15,7 +15,7 @@ services:
     networks:
       - movnet-network
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /etc/letsencrypt:/etc/letsencrypt:rw
     restart: always
     # volumes:
     #   - ../frontend/netmov-front:/app
