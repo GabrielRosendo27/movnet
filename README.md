@@ -71,3 +71,12 @@ POST /api/Auth/logout        # Logout do usuário
 ```bash
 GET /api/Movie/{title}  # Busca filme por título (integração com APIs externas)
 ```
+
+## Informações Técnicas
+
+### 🏠 Hospedagem
+- Projeto hospeadado em uma instância EC2 da AWS.
+- Banco de dados em uma instância do RDS.
+
+### 🚢 Docker
+Front-end e Back-end rodando como serviços em contêineres Docker.
