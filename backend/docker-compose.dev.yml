@@ -1,0 +1,72 @@
+services:
+  frontend:
+    build:
+      context: ../frontend/netmov-front
+      dockerfile: Dockerfile.dev
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      # - "3000:80"
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - movnet-network
+    restart: always
+    volumes:
+      - ../frontend/netmov-front:/app
+      - /app/node_modules
+    command: npm run dev -- --host
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    command: >
+      sh -c "while ! nc -z postdb 5432; do sleep 2; done && dotnet backend.dll"
+    depends_on:
+      postdb:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postdb;Port=5432;Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD};
+    networks:
+      - movnet-network
+    ports:
+      - "5000:80"
+    volumes:
+      - ./data-protection:/app/keys
+  postdb:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - movnet-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - movnet-network
+
+networks:
+  movnet-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  data-protection:
