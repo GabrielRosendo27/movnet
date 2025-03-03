@@ -20,12 +20,12 @@ export function UserList() {
         {isError && <div className="flex-1 flex items-center justify-center text-red-500">{error.message}</div>}
         {removeError && <div className="flex-1 flex items-center justify-center text-red-500">{removeError.message}</div>}
         {!isLoading && !isError && (
-          <div className="h-[calc(100vh-18rem)]">
+          <div className="h-[calc(100vh-22rem)]">
             <ul className="grid grid-cols-4 max-xl:grid-cols-3 max-md:grid-cols-2 p-6 gap-10">
               {movies?.length === 0 && <li className="text-center text-gray-400 mt-10">Nenhum filme na lista</li>}
 
               {movies?.map((movie) => (
-                <li key={movie.id} className="bg-slate-900 cursor-pointer rounded-xl border border-gray-800">
+                <li key={movie.id} className="bg-slate-900 cursor-pointer rounded-xl border border-gray-800 hover:opacity-85 w-[270px]">
                   <MovieCard
                     id={movie.id}
                     movieId={movie.movieId}
