@@ -86,7 +86,7 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
                 OriginalTitle = tmdbOriginalTitle,
                 Overview = tmdbOverview,
                 Runtime = omdbRuntime,
-                FilePath = $"https://image.tmdb.org/t/p/w92{tmdbPosterPath}",
+                FilePath = $"https://image.tmdb.org/t/p/w500{tmdbPosterPath}",
                 PosterPath = omdbPoster,
                 Year = !string.IsNullOrEmpty(omdbYear) ? int.Parse(omdbYear) : null,
                 Genre = omdbGenre?.Split(", ").ToList(),

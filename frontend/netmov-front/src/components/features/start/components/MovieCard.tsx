@@ -16,12 +16,12 @@ export function MovieCard({ title, year, genre, imdbRating, rottenRating, filePa
   }
 
   return (
-    <div className="flex gap-3">
-      <img src={filePath} alt="poster" />
-      <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2 items-center justify-center">
+      <img src={filePath} alt="poster" className="w-[200px] rounded-2xl object-cover" />
+      <div className="flex flex-col gap-3 p-4">
         <div>
           <span className="text-myOrange">{id}. </span>
-          <span>{title}</span>
+          <span className="text-xl">{title}</span>
         </div>
         <div className="flex gap-2">
           <span className="text-myPurple">|</span>
