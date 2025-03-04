@@ -49,7 +49,7 @@ public class JwtService(
             issuer: _settings.Issuer,
             audience: _settings.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(15),
+            expires: DateTime.UtcNow.AddMinutes(45),
             signingCredentials: creds
         );
 

@@ -70,7 +70,7 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
           int? omdbRuntime = null;
             if (!string.IsNullOrEmpty(runtimeString))
             {
-                // Extrai apenas os dígitos da string (ex.: "149 min" se torna "149")
+            
                 var digits = new string(runtimeString.Where(char.IsDigit).ToArray());
                 if (int.TryParse(digits, out int parsedRuntime))
                 {

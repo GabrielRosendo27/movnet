@@ -9,6 +9,15 @@ export interface Movie {
   runtime: number;
   movieId: number;
 }
+export interface MovieCardResumeProps {
+  id: number;
+  movieId: number;
+  year: number;
+  title: string;
+  onRemove?: () => void;
+  isRemoving: boolean;
+  filePath?: string;
+}
 export interface MovieCardProps {
   id: number;
   movieId: number;

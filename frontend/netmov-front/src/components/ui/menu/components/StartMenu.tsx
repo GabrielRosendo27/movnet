@@ -20,21 +20,21 @@ export function StartMenu() {
   };
 
   return (
-    <div className="p-4 bg-[#010C19] fixed top-0 left-0 w-full z-10">
-      <ul className="flex gap-4 justify-between mx-12 items-center">
-        <li>
+    <div className="flex items-center bg-slate-900 fixed top-0 left-0 w-full z-10 h-24">
+      <ul className="flex gap-4 justify-between mx-12 items-center w-full">
+        <li className="pb-2">
           <Button
             text="Movnet"
-            className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
+            className="bg-[#010C19] text-gray-500 px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
             onClick={() => handleActionNavigation("/")}
           />
         </li>
-        <li>
+        <li className="pb-2">
           <div className="relative" ref={inputRef}>
             <Button text="+ Adicionar Filme" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800" onClick={() => setShowInput(!showInput)} />
 
             <div
-              className={`absolute left-[-50%] top-[130%] transition-all duration-500 ease-in-out  ${
+              className={`absolute left-[120%] top-[5%] transition-all duration-500 ease-in-out  ${
                 showInput ? "opacity-100 pointer-events-auto z-0" : "opacity-0 pointer-events-none top-[100%]"
               }`}
             >
@@ -60,14 +60,14 @@ export function StartMenu() {
           </div>
         </li>
         <div className="flex gap-6">
-          <li>
+          <li className="pb-2">
             <Button
               text={isLoading ? "Carregando..." : `Bem vindo, ${userName}`}
               className="bg-[#010C19] text-gray-500 text- px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
             />
             <p>{usernameError && usernameError?.message}</p>
           </li>
-          <li>
+          <li className="pb-2">
             <Button text="Sair" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800" onClick={() => logout()} disabled={isLoad} />
           </li>
         </div>
