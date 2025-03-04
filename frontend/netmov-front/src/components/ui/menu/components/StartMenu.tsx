@@ -55,7 +55,7 @@ export function StartMenu() {
                 />
               </div>
               {validationError && <p className="text-red-500 text-sm mt-1">{validationError}</p>}
-              {isError && <p className="text-red-500 text-sm mt-1">{error?.message}</p>}
+              {isError && <p className="text-red-500 mt-1">{error?.message}</p>}
             </div>
           </div>
         </li>

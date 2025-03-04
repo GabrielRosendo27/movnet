@@ -9,11 +9,9 @@ export const registerUser = async (data: RegisterUserPayload) => {
     },
     body: JSON.stringify(data),
   });
-
+  const result = await response.json();
   if (!response.ok) {
-    throw new Error("Erro ao registrar usuário");
+    throw new Error(result.message || "O E-mail informado já está em uso");
   }
-  //
-  //
-  return response.json();
+  return result;
 };

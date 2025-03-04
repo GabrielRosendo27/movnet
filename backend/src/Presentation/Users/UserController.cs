@@ -1,4 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
+
 using System.Security.Claims;
 using backend.src.Core.DTOs.Requests;
 using backend.src.Core.Entities;
@@ -25,10 +25,7 @@ public class UserController(AppDbContext context) : ControllerBase
         [Authorize]
         public async Task<ActionResult<string>> GetUserName()
         {
-            // var userIdString = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
             var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");         
-            Console.WriteLine("############################# === ##########################");
-            Console.WriteLine(userIdString);
 
             if (userIdString == null || !int.TryParse(userIdString, out int userId)) 
                 return Unauthorized("Token inválido ou expirado.");
@@ -41,6 +38,8 @@ public class UserController(AppDbContext context) : ControllerBase
 
       [HttpPost]
       public async Task<ActionResult<UserModel>> RegisterUser(UserModel user){
+        bool userExists = await _context.Users.AnyAsync(u => u.Email == user.Email);
+        if (userExists) return Conflict(new {message = "O E-mail informado já está em uso"});
         user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
         _context.Users.Add(user);
         await _context.SaveChangesAsync();

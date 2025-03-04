@@ -10,9 +10,12 @@ export function Home() {
   }
 
   return (
-    <div className="overflow-hidden w-screen h-screen bg-darkGradient ">
+    <div className="overflow-hidden w-screen h-screen bg-darkGradient z-10 relative">
       <div>
         <Menu />
+      </div>
+      <div className="flex justify-center items-center">
+        <img src="1.jpeg" className="absolute -z-10 object-cover w-full opacity-20" />
       </div>
       <div className=" flex flex-col justify-center items-center h-screen">
         <div className="flex flex-col items-center justify-center mb-12">

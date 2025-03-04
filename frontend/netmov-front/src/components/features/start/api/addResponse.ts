@@ -9,18 +9,12 @@ export const addResponse = async (movieId: number, token: string): Promise<AddMo
       Authorization: `Bearer ${token}`,
     },
   });
-
+  const result = await response.json();
   if (!response.ok) {
-    const errorText = await response.text();
-    try {
-      const errorJson = JSON.parse(errorText);
-      throw new Error(errorJson.message || "Erro ao adicionar filme");
-    } catch {
-      throw new Error(errorText || "Erro desconhecido");
-    }
+    throw new Error(result.message);
   }
   if (response) {
     console.log("Resposta método addResponse: ", response);
   }
-  return response.json();
+  return result;
 };

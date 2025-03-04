@@ -18,7 +18,7 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
      public async Task<ActionResult<MovieModel>> GetMovie(string title)
      {
           if (string.IsNullOrWhiteSpace(title))
-            return BadRequest("Título inválido.");
+            return BadRequest(new {message="Título inválido"});
 
           var tmdbApiKey = "88740fcede037c6631f0d94c508f0454"; 
           var tmdbUrl = $"https://api.themoviedb.org/3/search/movie?query={Uri.EscapeDataString(title)}&api_key={tmdbApiKey}&language=pt-BR";
@@ -27,14 +27,14 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
           
           if(!tmdbResponse.IsSuccessStatusCode)
           {
-            return BadRequest("Erro ao buscar filmes na API");
+            return BadRequest(new {message="Erro ao buscar filme na API do TMDB"});
           }
           var tmdbContent = await tmdbResponse.Content.ReadAsStringAsync();
           var tmdbData = JObject.Parse(tmdbContent);
 
           var tmdbResults = tmdbData["results"]?.FirstOrDefault();
           if(tmdbResults == null){
-            return NotFound("Filme não encontrado.");
+            return NotFound(new {message="Filme não encontrado"});
           }
           var tmdbId = (int)tmdbResults["id"]!;
           var existingMovie = await _context.Movies
@@ -52,7 +52,7 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
            var omdbResponse = await _httpClient.GetAsync(omdbUrl);
             if (!omdbResponse.IsSuccessStatusCode)
               {
-                  return BadRequest("Erro ao buscar informações do filme na API OMDB.");
+                  return BadRequest(new {message="Erro ao buscar filme na API do OMDB"});
               }
 
           var omdbContent = await omdbResponse.Content.ReadAsStringAsync();
@@ -104,7 +104,7 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
           catch (DbUpdateException)
             {
               
-              return Conflict("Filme já existe no banco.");
+              return Conflict(new {message = "Erro ao adicionar filme no banco."});
           }
 
           return Ok(newMovie); 

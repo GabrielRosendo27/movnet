@@ -17,8 +17,7 @@ export const AddMovie = async ({ title }: AddMovieType): Promise<AddMovieRespons
   const movieData = await response.json();
 
   if (!response.ok) {
-    const errorMessage = movieData.message;
-    throw new Error(errorMessage);
+    throw new Error(movieData.message);
   }
 
   if (movieData) {
