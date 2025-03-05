@@ -16,6 +16,7 @@ export function UserList() {
   return (
     <div className="bg-darkGradient w-screen h-screen text-white  max-md:h-full overflow-x-hidden scroll-container flex items-center justify-center">
       <StartMenu />
+
       <div className="p-4">
         {(isLoading || isRemoving) && (
           <div className="flex-1 flex items-center justify-center">

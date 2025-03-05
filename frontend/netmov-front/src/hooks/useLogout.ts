@@ -1,11 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "./useAuthContext";
 import { API_ENDPOINTS } from "../api/api";
+import { useActionNavigation } from "./useActionNavigation";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 export function useLogout() {
   const { logout } = useAuth();
-  const navigate = useNavigate();
+  const { handleActionNavigation } = useActionNavigation();
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
@@ -22,13 +24,18 @@ export function useLogout() {
       return response;
     },
     onSuccess: () => {
-      logout();
-      navigate("/");
+      NProgress.start();
+      const delay = Math.floor(Math.random() * (900 - 300 + 1)) + 300;
+      setTimeout(() => {
+        logout();
+        handleActionNavigation("/");
+        NProgress.done();
+      }, delay);
     },
     onError: (error) => {
-      console.error("Erro ao fazer logout:", error);
       logout();
-      navigate("/");
+      handleActionNavigation("/");
+      console.error("Erro ao fazer logout:", error);
     },
   });
 

@@ -12,6 +12,7 @@ export function Register() {
   return (
     <div className="bg-darkGradient w-screen h-screen flex items-center justify-center flex-col">
       <Menu />
+
       <p className="text-gray-500 mb-6">Registre seu usuário, e-mail e senha</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-center justify-center flex-col">

@@ -1,13 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../../../hooks/useAuthContext";
 import { API_ENDPOINTS } from "../../../../api/api";
 import { LoginData, LoginResponse } from "../types/types";
+import { useActionNavigation } from "../../../../hooks/useActionNavigation";
 
 export function useLoginUser() {
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const { handleActionNavigation } = useActionNavigation();
   const { login } = useAuth();
 
   const loginRequest = async (loginData: LoginData): Promise<LoginResponse> => {
@@ -32,7 +32,7 @@ export function useLoginUser() {
       localStorage.setItem("authToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       login();
-      navigate("/");
+      handleActionNavigation("/");
     },
     onError: (err: Error) => {
       setError(err.message || "Erro ao realizar login");

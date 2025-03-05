@@ -42,3 +42,8 @@ input:-webkit-autofill:focus {
 .animate-fade-in {
   animation: fade-in 0.3s ease-out;
 }
+
+#nprogress .bar {
+  background: #6a48f2 !important;
+  top: 90px !important;
+}
