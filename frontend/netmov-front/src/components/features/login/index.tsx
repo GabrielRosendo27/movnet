@@ -21,7 +21,7 @@ export function Login() {
       <div className="bg-darkGradient w-screen h-screen flex items-center justify-center flex-col">
         <Menu />
         <div className="mb-4">
-          <p className="text-gray-400 mb-4">
+          <p className="text-gray-400 mb-4 max-sm:mx-auto max-sm:p-4">
             Preencha seus dados, caso não possua uma conta, <Button text="registre-se" onClick={() => handleActionNavigation("register")} className=" text-myOrange" />
           </p>
         </div>

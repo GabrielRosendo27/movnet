@@ -46,7 +46,7 @@ export function UserList() {
             </div>
             {movies?.length === 0 && <li className="text-center text-gray-400 mt-10">Nenhum filme na lista</li>}
             <div>
-              <ul className="grid grid-cols-4 max-xl:grid-cols-3 max-md:grid-cols-2 p-6 gap-10">
+              <ul className="grid grid-cols-4 max-xl:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 p-6 gap-10">
                 {layout === "1" &&
                   movies?.map((movie) => (
                     <li key={movie.id} className="bg-slate-900 cursor-pointer rounded-xl border border-gray-800 hover:opacity-85 w-[270px] ">
@@ -68,7 +68,7 @@ export function UserList() {
               </ul>
             </div>
             <div>
-              <ul className="flex flex-col gap-2 ">
+              <ul className="flex flex-col gap-2">
                 {layout === "2" &&
                   movies?.map((movie) => (
                     <li key={movie.id} className="bg-slate-900 cursor-pointer rounded-sm hover:opacity-85 p-4">
@@ -77,6 +77,10 @@ export function UserList() {
                         id={movie.id}
                         title={movie.title}
                         year={movie.year}
+                        imdbRating={movie.imdbRating}
+                        rottenRating={movie.rottenRating}
+                        runtime={movie.runtime}
+                        genre={movie.genre}
                         onRemove={() => removeMovie(movie.movieId)}
                         isRemoving={isRemoving}
                         filePath={movie.filePath}

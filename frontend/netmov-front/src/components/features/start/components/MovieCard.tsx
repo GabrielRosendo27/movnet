@@ -1,19 +1,8 @@
-import { MovieCardProps } from "../types/types";
+import { MovieProps } from "../types/types";
+import { useFormatRuntime } from "../hooks/useFormatRuntime";
 
-export function MovieCard({ title, year, genre, imdbRating, rottenRating, filePath, runtime, id, onRemove, isRemoving }: MovieCardProps) {
-  function formatRuntime(runtime: number) {
-    const hours = Math.floor(runtime / 60);
-    const minutes = runtime % 60;
-
-    if (hours === 0) {
-      return `${minutes}min`;
-    }
-    if (minutes === 0) {
-      return `${hours}h`;
-    }
-
-    return `${hours}h ${minutes}min`;
-  }
+export function MovieCard({ title, year, genre, imdbRating, rottenRating, filePath, runtime, id, onRemove, isRemoving }: MovieProps) {
+  const formattedRuntime = useFormatRuntime(runtime);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -26,7 +15,7 @@ export function MovieCard({ title, year, genre, imdbRating, rottenRating, filePa
         <div className="flex gap-2 mt-2 mb-1 justify-between ml-4">
           <span>{year}</span>
 
-          {runtime ? <span className="mr-6">{formatRuntime(runtime)}</span> : "-"}
+          {runtime ? <span className="mr-6">{formattedRuntime}</span> : "-"}
         </div>
         <div className="flex gap-2 border-b border-slate-800 ml-4">
           <span className="text-myPurple text-xl">|</span>

@@ -49,7 +49,7 @@ export function TypingEffect() {
   return (
     <div className="flex flex-col ml-auto mr-auto">
       {visibleText.map((segment, i) => (
-        <div key={i} className={segment.style}>
+        <div key={i} className={`${segment.style} max-sm: text-xl`}>
           {segment.visibleText}
         </div>
       ))}

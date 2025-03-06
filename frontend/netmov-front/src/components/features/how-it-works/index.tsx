@@ -10,7 +10,7 @@ export function Index() {
         <div>
           <Menu />
         </div>
-        <div className=" mt-36 ml-16 text-xl flex flex-col items-start  text-gray-200">
+        <div className="mt-36 ml-16 text-xl p-2 flex flex-col items-start text-gray-200 max-sm:text-base max-sm:ml-2">
           <div>
             <span className="text-myOrange mr-2">1.</span>
             Crie uma conta com usuário, e-mail e senha.
