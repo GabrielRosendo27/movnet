@@ -10,17 +10,21 @@ export function Home() {
       <div>
         <Menu />
       </div>
-      <div className="bg-[url('7.jfif')] bg-cover bg-center bg-no-repeat -z-10 absolute w-full h-full opacity-5"></div>
-      <div className=" flex flex-col justify-center items-center h-screen">
-        <div className="flex flex-col items-center justify-center mb-12">
+      <div
+        className="grid mt-32 p-4 mx-auto 
+               grid-cols-[minmax(0,1fr)_550px] 
+               w-full max-w-[calc(100vw-32px)] max-lg:grid-cols-1 max-lg:mt-64"
+      >
+        <div className="flex flex-col items-center justify-center">
           <TypingEffect />
-          <div className="mt-4 ">
-            <Button
-              onClick={() => handleActionNavigation("register")}
-              text="Começar"
-              className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3 animate-fadeSlideDown"
-            />
-          </div>
+          <Button
+            onClick={() => handleActionNavigation("register")}
+            text="Começar"
+            className="bg-myPurple text-xl text-white px-8 py-4 hover:bg-indigo-800 mt-3 animate-fadeSlideDown"
+          />
+        </div>
+        <div className="place-items-end mr-20 max-lg:hidden">
+          <img src="111.png" alt="a" className="rounded-xl border border-slate-800 w-[550px] object-cover " />
         </div>
       </div>
     </div>

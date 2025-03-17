@@ -36,7 +36,7 @@ export function StartMenu() {
             <Button text="+ Adicionar Filme" className="px-4 py-2 text-sm bg-myPurple text-white hover:bg-indigo-800" onClick={() => setShowInput(!showInput)} />
 
             <div
-              className={`absolute left-[120%]  top-[5%] transition-all duration-500 ease-in-out max-2xl:left-[0%] max-2xl:top-[200%]
+              className={`absolute left-[120%]  top-[5%] transition-all duration-500 ease-in-out max-2xl:left-[0%] max-2xl:top-[150%]
   ${showInput ? "opacity-100 pointer-events-auto z-0" : "opacity-0 pointer-events-none top-[100%]"}`}
             >
               <div className="flex items-center justify-center ">

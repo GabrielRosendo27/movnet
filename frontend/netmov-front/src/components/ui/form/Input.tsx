@@ -25,7 +25,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, tex
       />
       <label
         htmlFor={text}
-        className={`text-gray-500 text-lg absolute max-md:top-5 top-2 left-1 transition-all duration-300 cursor-pointer peer-focus:top-[-20px] max-md:peer-focus:top-[-10px] ${
+        className={`text-gray-500 text-lg absolute top-2 left-1 transition-all duration-300 cursor-pointer peer-focus:top-[-20px]  ${
           hasValue ? "z-[-1] opacity-0" : "z-0 opacity-100"
         }  `}
       >
