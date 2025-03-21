@@ -20,6 +20,7 @@ export default {
       },
       backgroundImage: {
         darkGradient: "linear-gradient(to bottom, #010D1C, #000000)",
+        grayBackground: "#060D17",
       },
     },
   },
