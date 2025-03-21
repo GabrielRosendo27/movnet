@@ -8,8 +8,8 @@ export function Menu() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <div className="flex items-center bg-myGray fixed top-0 left-0 w-[99.2%] z-50 h-20 ">
-      <div className="flex items-center ml-12">
+    <div className="flex items-center max-md:justify-center bg-myGray fixed top-0 left-0 w-[96%] z-50 h-20">
+      <div className="flex items-center ml-12 relative">
         <div>
           <Button
             text="🎬 Movnet"
@@ -19,7 +19,7 @@ export function Menu() {
         </div>
 
         {/* Botão para mobile */}
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center p-4 mt-4">
           <button onClick={toggleMenu} className="text-gray-500 focus:outline-none">
             {/* Ícone de hambúrguer */}
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -56,7 +56,7 @@ export function Menu() {
 
       {/* Menu mobile */}
       {isOpen && (
-        <ul className="md:hidden flex flex-col gap-4 mt-4 mx-4 items-center">
+        <ul className="md:hidden flex flex-col gap-4 mx-4 items-center absolute top-[80px] left-[50%] bg-gray-900  p-4 rounded-lg">
           <li>
             <Button
               text="Como Funciona"
