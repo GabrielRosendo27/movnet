@@ -14,6 +14,76 @@ public class MovieController(AppDbContext context, HttpClient httpClient) : Cont
   private readonly AppDbContext _context = context;  
    private readonly HttpClient _httpClient = httpClient;
 
+   [HttpGet("popular")]
+public async Task<IActionResult> GetPopularMovies()
+{
+    var tmdbApiKey = "88740fcede037c6631f0d94c508f0454";
+    var tmdbUrl = $"https://api.themoviedb.org/3/movie/popular?api_key={tmdbApiKey}&language=pt-BR";
+
+    var tmdbResponse = await _httpClient.GetAsync(tmdbUrl);
+    
+    if (!tmdbResponse.IsSuccessStatusCode)
+    {
+        return BadRequest(new { message = "Erro ao buscar filmes populares na API do TMDB" });
+    }
+
+    var tmdbContent = await tmdbResponse.Content.ReadAsStringAsync();
+    var tmdbData = JObject.Parse(tmdbContent);
+
+            if (tmdbData["results"] is not JArray results || !results.Any())
+            {
+                return NotFound(new { message = "Nenhum filme encontrado" });
+            }
+
+            var top9 = results
+        .Take(9)
+        .Select(m => new
+        {
+        Id = (int)m["id"]!,
+        Title = (string)m["title"]!,
+        PosterPath = $"https://image.tmdb.org/t/p/w500{m["poster_path"]}",
+        ReleaseDate = (string)m["release_date"]!,
+        Rating = (double)m["vote_average"]!
+        })
+        .ToList();
+
+    return Ok(top9);
+}
+[HttpGet("top-rated")]
+public async Task<IActionResult> GetTopRatedMovies()
+{
+    var tmdbApiKey = "88740fcede037c6631f0d94c508f0454";
+    var tmdbUrl = $"https://api.themoviedb.org/3/movie/top_rated?api_key={tmdbApiKey}&language=pt-BR";
+
+    var tmdbResponse = await _httpClient.GetAsync(tmdbUrl);
+    
+    if (!tmdbResponse.IsSuccessStatusCode)
+    {
+        return BadRequest(new { message = "Erro ao buscar filmes populares na API do TMDB" });
+    }
+
+    var tmdbContent = await tmdbResponse.Content.ReadAsStringAsync();
+    var tmdbData = JObject.Parse(tmdbContent);
+
+            if (tmdbData["results"] is not JArray results || !results.Any())
+            {
+                return NotFound(new { message = "Nenhum filme encontrado" });
+            }
+
+            var top9 = results
+        .Take(9)
+        .Select(m => new
+        {
+        Id = (int)m["id"]!,
+        Title = (string)m["title"]!,
+        PosterPath = $"https://image.tmdb.org/t/p/w500{m["poster_path"]}",
+        ReleaseDate = (string)m["release_date"]!,
+        Rating = (double)m["vote_average"]!
+        })
+        .ToList();
+
+    return Ok(top9);
+}
         [HttpGet("{title}")]
      public async Task<ActionResult<MovieModel>> GetMovie(string title)
      {

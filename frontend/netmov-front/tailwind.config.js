@@ -17,6 +17,7 @@ export default {
         darkBlue: "#010D1C",
         myOrange: "#ea580c",
         myPurple: "#6A48F2",
+        myGray: "#060D17",
       },
       backgroundImage: {
         darkGradient: "linear-gradient(to bottom, #010D1C, #000000)",

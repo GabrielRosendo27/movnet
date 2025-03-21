@@ -13,12 +13,12 @@ html {
 }
 
 .scroll-container {
-  overflow: scroll; /* Permite o scroll */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 .scroll-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari e Opera */
+  display: none;
 }
 
 input:-webkit-autofill,

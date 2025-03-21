@@ -10,6 +10,8 @@ export const API_ENDPOINTS = {
   },
   MOVIES: {
     GET_BY_NAME: (movieName: string) => `${BASE_URL}/Movie/${encodeURIComponent(movieName)}`, // GET Título para buscar filme retornando filme
+    POPULAR_MOVIES: `${BASE_URL}/Movie/popular`,
+    TOP_RATED: `${BASE_URL}/Movie/top-rated`,
   },
   USER: {
     REGISTER: `${BASE_URL}/User`,

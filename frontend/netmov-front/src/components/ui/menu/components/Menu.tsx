@@ -8,12 +8,12 @@ export function Menu() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <div className="p-4 bg-grayBackground fixed top-0 left-0 w-full z-30">
-      <div className="flex items-center">
+    <div className="flex items-center bg-myGray fixed top-0 left-0 w-[99.2%] z-50 h-20 ">
+      <div className="flex items-center ml-12">
         <div>
           <Button
             text="🎬 Movnet"
-            className="bg-[#010C19] text-myOrange text-3xl px-4 py-2 transition-transform duration-3000 hover:text-myPurple hover:scale-105"
+            className="text-myOrange text-3xl px-4 py-2 transition-transform duration-3000 hover:text-myPurple hover:scale-105"
             onClick={() => handleActionNavigation("home")}
           />
         </div>
