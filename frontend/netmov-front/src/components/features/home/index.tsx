@@ -9,9 +9,9 @@ export function Home() {
   const { handleActionNavigation } = useActionNavigation();
 
   return (
-    <div className="bg-myGray w-screen h-screen overflow-x-hidden ">
+    <div className="bg-myGray w-screen h-screen overflow-x-hidden pt-40 max-md:pt-32">
       <Menu />
-      <div className="container mx-auto p-4 mt-48">
+      <div className="container mx-auto p-4">
         <div className="flex gap-10">
           <div className="flex items-center flex-col h-max">
             <Description />

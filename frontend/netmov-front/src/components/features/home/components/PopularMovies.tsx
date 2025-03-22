@@ -4,7 +4,7 @@ export function PopularMovies() {
   const { data, isLoading, isError } = usePopularMovies();
   return (
     <div className="">
-      <div className="border-t border-slate-700 w-full"></div>
+      <div className="max-md:border-t border-slate-700 w-full"></div>
       <p className="text-white text-3xl mt-6">Filmes mais populares recentemente 🚀</p>
       {isLoading && <p className="text-gray-400">Carregando filmes...</p>}
 
