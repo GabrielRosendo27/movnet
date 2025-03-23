@@ -14,7 +14,7 @@ export function Register() {
   return (
     <div className="bg-myGray w-screen h-screen flex items-center justify-center flex-col overflow-x-hidden max-md:pt-20">
       <Menu />
-      <div className="flex justify-center gap-10 w-full p-4 max-md:flex-col items-center">
+      <div className="flex justify-evenly gap-10 w-full p-4 max-md:flex-col items-center">
         <div className="w-[600px] text-gray-300 flex flex-col ml-6 leading-relaxed tracking-wide max-md:w-[98%]">
           <span className="text-5xl mb-2 max-md:text-3xl max-md:w-[98%]">{bemVindo}</span>
           <div className=" border-b border-slate-800 mb-4 mt-2"></div>
