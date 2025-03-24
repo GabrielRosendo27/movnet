@@ -20,7 +20,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, tex
         ref={ref}
         type={type}
         {...props}
-        className={`peer w-full bg-myGray outline-none border-b-2 border-gray-500 mb-2 text-gray-300 p-2 focus:outline-none cursor-pointer ${className}`}
+        className={`peer w-full bg-myGray outline-none border-b-2 border-gray-500 mb-2 text-gray-300 p-2 focus:outline-none cursor-pointer  ${className}`}
         onBlur={handleBlur}
       />
       <label

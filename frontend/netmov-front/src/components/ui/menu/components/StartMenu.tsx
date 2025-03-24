@@ -22,12 +22,12 @@ export function StartMenu() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
   return (
-    <div className="flex items-center bg-slate-900 fixed top-0 left-0 w-full z-10 h-24">
+    <div className="flex items-center bg-myGray fixed top-0 left-0 w-full z-10 h-24">
       <ul className="hidden md:flex gap-4 justify-between mx-12 items-center w-full">
         <li className="pb-2">
           <Button
-            text="Movnet"
-            className="bg-[#010C19] text-gray-500 px-4 py-2 rounded-md shadow-md transition-colors duration-500 hover:bg-[#010C19] hover:text-gray-400"
+            text="🎬 Movnet"
+            className="text-myOrange text-3xl px-4 py-2 transition-transform duration-3000 hover:text-myPurple hover:scale-105"
             onClick={() => handleActionNavigation("/")}
           />
         </li>

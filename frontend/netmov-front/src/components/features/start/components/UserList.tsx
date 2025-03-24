@@ -14,7 +14,7 @@ export function UserList() {
     setLayout(event.target.value);
   };
   return (
-    <div className="bg-darkGradient w-screen h-screen text-white  max-md:h-full overflow-x-hidden scroll-container flex items-center justify-center">
+    <div className="bg-myGray w-screen h-screen text-white  max-md:h-full overflow-x-hidden scroll-container flex items-center justify-center">
       <StartMenu />
 
       <div className="p-4">
