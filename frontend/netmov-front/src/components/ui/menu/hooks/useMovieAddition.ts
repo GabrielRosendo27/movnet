@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAddMovie } from "../../../../hooks/useAddMovie";
 import { useQueryClient } from "@tanstack/react-query";
+import type { MutationContext } from "../../../../hooks/useAddMovie";
 
 export function useMovieAddition() {
   const queryClient = useQueryClient();
@@ -15,18 +16,34 @@ export function useMovieAddition() {
     }
 
     setValidationError("");
+
     mutate(
       { title: movieName },
       {
+        onMutate: async () => {
+          await queryClient.cancelQueries({ queryKey: ["totalUserMovies"] });
+          const previousTotal = queryClient.getQueryData<number>(["totalUserMovies"]);
+
+          if (typeof previousTotal === "number") {
+            queryClient.setQueryData(["totalUserMovies"], previousTotal + 1);
+          }
+
+          return { previousTotal };
+        },
+        onError: (context: MutationContext | undefined) => {
+          if (context?.previousTotal !== undefined) {
+            queryClient.setQueryData(["totalUserMovies"], context.previousTotal);
+          }
+        },
         onSuccess: () => {
           setMovieName("");
           onSuccess?.();
+        },
+        onSettled: () => {
           queryClient.invalidateQueries({ queryKey: ["userMovies"] });
+          queryClient.invalidateQueries({ queryKey: ["totalUserMovies"] });
         },
-        onError: () => {
-          setMovieName("");
-        },
-      }
+      } as Parameters<typeof mutate>[1] // Type assertion para corrigir a tipagem
     );
   };
 

@@ -10,6 +10,9 @@ const useRemoveMovie = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userMovies"] });
+      queryClient.invalidateQueries({
+        queryKey: ["totalUserMovies"],
+      });
     },
 
     onError: (error) => {

@@ -1,12 +1,12 @@
 import { AuthenticatedMenu } from "../../ui/menu";
-import { UserList } from "./components/UserList";
+import { UserDetails } from "./components/UserDetails";
 
 export function Start() {
   return (
     <>
-      <div className="bg-darkGradient w-screen h-screen text-white flex items-center justify-center">
+      <div className="bg-myGray w-screen h-screen overflow-x-hidden">
         <AuthenticatedMenu />
-        <UserList />
+        <UserDetails />
       </div>
     </>
   );

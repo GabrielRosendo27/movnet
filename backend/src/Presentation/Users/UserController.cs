@@ -16,6 +16,17 @@ public class UserController(AppDbContext context) : ControllerBase
   {
         private readonly AppDbContext _context = context;
 
+        [HttpGet("total-movies")]
+        public async Task<ActionResult<int>> GetTotalUserMovies(){
+             var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");         
+
+            if (userIdString == null || !int.TryParse(userIdString, out int userId)) 
+                return Unauthorized(new {message ="Usuário não autenticado"});
+            var totalMovies = await _context.UserMovies.Where(x => x.UserId == userId).CountAsync();
+            return Ok(totalMovies);
+            
+        }
+
         [HttpGet]
         public async Task<ActionResult<UserModel>> SearchUsers(){
             var users = await _context.Users.Take(1).ToListAsync();
