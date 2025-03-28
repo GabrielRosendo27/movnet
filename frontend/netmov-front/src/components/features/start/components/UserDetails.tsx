@@ -8,7 +8,7 @@ export function UserDetails() {
   const displayTotal = () => {
     if (totalMovies !== undefined) return totalMovies;
     if (movies?.length !== undefined) return movies.length;
-    return "--";
+    return "-";
   };
 
   return (
