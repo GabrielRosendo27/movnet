@@ -42,6 +42,7 @@ export function useMovieAddition() {
         onSettled: () => {
           queryClient.invalidateQueries({ queryKey: ["userMovies"] });
           queryClient.invalidateQueries({ queryKey: ["totalUserMovies"] });
+          queryClient.invalidateQueries({ queryKey: ["totalHours"] });
         },
       } as Parameters<typeof mutate>[1] // Type assertion para corrigir a tipagem
     );

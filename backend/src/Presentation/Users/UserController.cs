@@ -16,6 +16,33 @@ public class UserController(AppDbContext context) : ControllerBase
   {
         private readonly AppDbContext _context = context;
 
+        [HttpGet("total-hours-watch")]
+        public async Task<ActionResult<int>> GetTotalHours(){
+            try {
+
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");         
+
+            if (userIdString == null || !int.TryParse(userIdString, out int userId)) 
+                return Unauthorized(new {message ="Usuário não autenticado"});
+
+            var totalMinutes = await _context.UserMovies
+            .Where(u => u.UserId == userId)
+            .Join(_context.Movies,
+            userMovie => userMovie.MovieId,
+            movie => movie.Id,
+            (userMovie, movie) => movie.Runtime)
+            .SumAsync(runtime => runtime ?? 0);
+
+            int totalHours = totalMinutes / 60;
+            return Ok(totalHours);
+             
+            }
+            catch (Exception) {
+                return StatusCode(500, "Erro interno no servidor");
+
+            }
+        }
+
         [HttpGet("total-movies")]
         public async Task<ActionResult<int>> GetTotalUserMovies(){
              var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");         

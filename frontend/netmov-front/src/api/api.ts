@@ -16,5 +16,6 @@ export const API_ENDPOINTS = {
     MOVIES: `${BASE_URL}/User/movies-list`,
     MOVIEID: (movieId: number) => `${BASE_URL}/User/movies/${movieId}`,
     TOTAL_MOVIES: `${BASE_URL}/User/total-movies`,
+    TOTAL_HOURS: `${BASE_URL}/User/total-hours-watch`,
   },
 };
