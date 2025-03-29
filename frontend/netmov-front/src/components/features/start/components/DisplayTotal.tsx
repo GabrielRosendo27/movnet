@@ -1,3 +1,4 @@
+import CountUp from "react-countup";
 import { TotalUserMovies } from "../api/totalMovies";
 import { useUserMovies } from "../api/userMovies";
 
@@ -8,14 +9,25 @@ export function DisplayTotal() {
   const displayTotal = () => {
     if (totalMovies !== undefined) return totalMovies;
     if (movies?.length !== undefined) return movies.length;
-    return "-";
+    return 0;
   };
 
   return (
     <div className="flex flex-col">
       {isLoading && <div>Carregando...</div>}
-      {error && <div>{error.message}</div>}
-      <span>Filmes assistidos: {displayTotal()} </span>
+      {error && <div>Erro ao carregar dados</div>}
+      <span>Filmes Assistidos</span>
+      <CountUp
+        end={displayTotal()}
+        duration={2.5}
+        separator=","
+        decimals={0}
+        className="mx-auto"
+        startOnMount={false}
+        useEasing={true}
+        easingFn={(t, b, c, d) => c * ((t = t / d - 1) * t * t + 1) + b}
+        delay={0.3}
+      />
       {isFetching && <span className="ml-2 text-sm">↻</span>}
     </div>
   );
