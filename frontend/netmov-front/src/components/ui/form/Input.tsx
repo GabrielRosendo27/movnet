@@ -4,9 +4,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type: string;
   className?: string;
   classNameSpan?: string;
+  classNameDiv?: string;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, text, className, classNameSpan, ...props }, ref) => {
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, text, className, classNameSpan, classNameDiv, ...props }, ref) => {
   const [hasValue, setHasValue] = useState(false);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -14,7 +15,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, tex
   };
 
   return (
-    <div className="relative flex flex-col w-[300px]">
+    <div className={`relative flex flex-col w-[300px] ${classNameDiv}`}>
       <input
         id={text}
         ref={ref}
