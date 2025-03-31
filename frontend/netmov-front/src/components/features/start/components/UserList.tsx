@@ -13,8 +13,9 @@ export function UserList() {
   const handleLayoutChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLayout(event.target.value);
   };
+
   return (
-    <div className="bg-myGray w-screen h-screen text-white  max-md:h-full overflow-x-hidden scroll-container flex items-center justify-center">
+    <div className="bg-myGray w-screen h-screen text-white overflow-x-hidden scroll-container flex items-center justify-center">
       <StartMenu />
 
       <div className="p-4">
@@ -84,6 +85,7 @@ export function UserList() {
                         onRemove={() => removeMovie(movie.movieId)}
                         isRemoving={isRemoving}
                         filePath={movie.filePath}
+                        dateAdded={movie.dateAdded}
                       />
                     </li>
                   ))}

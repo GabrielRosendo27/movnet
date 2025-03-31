@@ -1,16 +1,16 @@
 import { useFormatRuntime } from "../hooks/useFormatRuntime";
 import { MovieProps } from "../types/types";
 
-export function MovieCardResume({ title, year, id, onRemove, isRemoving, filePath, imdbRating, rottenRating, runtime, genre }: MovieProps) {
+export function MovieCardResume({ title, year, id, onRemove, isRemoving, filePath, imdbRating, rottenRating, runtime, genre, dateAdded }: MovieProps) {
   const formattedRuntime = useFormatRuntime(runtime);
   return (
-    <div className="flex w-[calc(100vw-36rem)] max-lg:w-full">
-      <img src={filePath} className="w-20 object-cover rounded-sm max-md:w-[100px]" alt="poster" />
+    <div className="flex w-[calc(100vw-36rem)] max-lg:w-full max-md:flex-col max-md:items-center">
+      <img src={filePath} className="w-[140px] max-md:mb-2 p-2 max-md:w-[200px] object-cover rounded-sm " alt="poster" />
       <div className="flex gap-2 ml-4 max-sm:ml-0">
         <span className="text-slate-400 text-xl ml-4">{id}.</span>
         <div className="flex flex-col">
           <span className="text-lg">{title}</span>
-          <div className="flex items-center">
+          <div className="flex items-center mt-2">
             <span className="text-xl text-myOrange mr-2">|</span>
             <span className="max-md:mt-2">{year}</span>
           </div>
@@ -43,6 +43,10 @@ export function MovieCardResume({ title, year, id, onRemove, isRemoving, filePat
                 <img src="trash.svg" className="w-4 flex-shrink-0" alt="trash" />
               </button>
             </div>
+          </div>
+          <div className="flex items-center my-auto">
+            <span className="mr-2 text-myPurple text-xl">| </span>
+            <span className="text-sm">Adicionado em {dateAdded}</span>
           </div>
         </div>
       </div>

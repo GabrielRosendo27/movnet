@@ -8,6 +8,7 @@ export interface Movie {
   filePath?: string;
   runtime: number;
   movieId: number;
+  dateAdded?: string | undefined;
 }
 
 export interface MovieProps {
@@ -22,4 +23,5 @@ export interface MovieProps {
   runtime: number;
   onRemove?: () => void;
   isRemoving: boolean;
+  dateAdded?: string | undefined;
 }

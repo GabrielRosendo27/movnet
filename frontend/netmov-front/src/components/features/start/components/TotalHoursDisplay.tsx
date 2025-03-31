@@ -14,7 +14,7 @@ export function TotalHoursDisplay() {
         duration={2.5}
         separator=","
         decimals={0}
-        className="mx-auto"
+        className="mx-auto text-6xl text-myPurple max-md:text-3xl max-md:mx-0"
         startOnMount={false}
         useEasing={true}
         easingFn={(t, b, c, d) => c * ((t = t / d - 1) * t * t + 1) + b}

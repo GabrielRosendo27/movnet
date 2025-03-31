@@ -22,12 +22,24 @@ export default {
           "100%": { transform: "translateX(-100%)" },
         },
         inputSlideIn: {
-          "0%": { transform: "translateY(-20%)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
+          "0%": {
+            transform: "translateY(-20%)",
+            opacity: 0,
+          },
+          "100%": {
+            transform: "translateY(0)",
+            opacity: 1,
+          },
         },
         inputSlideOut: {
-          "0%": { transform: "translateY(-20%)", opacity: "1" },
-          "100%": { transform: "translateY(0)", opacity: "0" },
+          "0%": {
+            transform: "translateY(-20)",
+            opacity: 1,
+          },
+          "100%": {
+            transform: "translateY(0)",
+            opacity: 0,
+          },
         },
       },
       animation: {
@@ -35,8 +47,8 @@ export default {
         fadeIn: "fadeIn 0.2s ease-in-out",
         menuIn: "menuSlideIn 300ms ease-out forwards",
         menuOut: "menuSlideOut 300ms ease-out forwards",
-        inputSlideIn: "inputSlideIn 300ms ease-in forwards",
-        inputSlideOut: "inputSlideOut 300ms ease-out forwards",
+        inputSlideIn: "inputSlideIn 400ms cubic-bezier(0.4, 0, 0.2, 1)",
+        inputSlideOut: "inputSlideOut 300ms cubic-bezier(0.4, 0, 0.2, 1)",
       },
       colors: {
         darkBlue: "#010D1C",

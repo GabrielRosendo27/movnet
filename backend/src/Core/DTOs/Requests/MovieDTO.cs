@@ -10,5 +10,6 @@ public class MovieDTO
     public int? RottenRating { get; set; }
     public string? FilePath { get; set; }
     public int? Runtime { get; set; }
+    public string? DateAdded { get; set; }
   
 }

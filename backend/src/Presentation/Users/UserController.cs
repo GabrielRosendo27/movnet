@@ -154,6 +154,7 @@ public class UserController(AppDbContext context) : ControllerBase
                 RottenRating = um.Movie.RottenRating,
                 FilePath = um.Movie.FilePath,
                 Runtime = um.Movie.Runtime,
+                DateAdded = um.DateAdded.ToString("dd/MM/yyyy")
 
             })
             .ToList();

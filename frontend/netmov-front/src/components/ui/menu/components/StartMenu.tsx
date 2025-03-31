@@ -6,7 +6,7 @@ import { useMovieAddition } from "../hooks/useMovieAddition";
 import { useUsername } from "../../../features/start/hooks/useUsername";
 import { useLogout } from "../../../../hooks/useLogout";
 
-import { MenuMobile } from "./MenuMobile";
+import { MenuMobile } from "./menu-mobile/MenuMobile";
 
 export function StartMenu() {
   const { handleActionNavigation } = useActionNavigation();
