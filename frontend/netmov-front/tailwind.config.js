@@ -13,20 +13,30 @@ export default {
           "0%": { opacity: "0" },
           "100%": { opacity: "0.3" },
         },
-        menuSlideLeft: {
+        menuSlideIn: {
           "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(0)" },
         },
-        menuSlideExit: {
+        menuSlideOut: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-100%)" },
+        },
+        inputSlideIn: {
+          "0%": { transform: "translateY(-20%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        inputSlideOut: {
+          "0%": { transform: "translateY(-20%)", opacity: "1" },
+          "100%": { transform: "translateY(0)", opacity: "0" },
         },
       },
       animation: {
         fadeSlideDown: "slideDown 3s ease-out",
         fadeIn: "fadeIn 0.2s ease-in-out",
-        menuSlideLeft: "menuSlideLeft 300ms ease-out forwards",
-        menuSlideExit: "menuSlideExit 300ms ease-out forwards",
+        menuIn: "menuSlideIn 300ms ease-out forwards",
+        menuOut: "menuSlideOut 300ms ease-out forwards",
+        inputSlideIn: "inputSlideIn 300ms ease-in forwards",
+        inputSlideOut: "inputSlideOut 300ms ease-out forwards",
       },
       colors: {
         darkBlue: "#010D1C",
