@@ -17,6 +17,9 @@ Acessível em [movnet.tech](https://movnet.tech)
 - Adição/remoção de filmes na lista pessoal
 - Persistência dos dados entre sessões
 - Organização personalizada de listas
+- Métricas de Uso:
+  - Total de filmes assistidos
+  - Total de horas assistidas
 
 ### 🌐 Integração com APIs Externas
 - Combinação de dados do TMDB (The Movie Database) e OMDB (Open Movie Database)
@@ -55,11 +58,13 @@ Acessível em [movnet.tech](https://movnet.tech)
 
 ### 👤 Usuário
 ```bash
-GET    /api/User/get-username     # Obtém nome de usuário
-GET    /api/User/movies-list      # Lista filmes do usuário
-POST   /api/User                  # Registra novo usuário
-POST   /api/User/movies/{movieId} # Adiciona filme à lista
-DELETE /api/User/movies/{movieId} # Remove filme da lista
+GET    /api/User/get-username         # Obtém nome de usuário
+GET    /api/User/movies-list          # Lista filmes do usuário
+GET    /api/User/total-hours-watch    # Retorna o total de horas assistidas
+GET    /api/User/total-movies         # Retorna o total de filmes na lista do usuário
+POST   /api/User                      # Registra novo usuário
+POST   /api/User/movies/{movieId}     # Adiciona filme à lista
+DELETE /api/User/movies/{movieId}     # Remove filme da lista
 ```
 ### 🔑 Autenticação
 ```bash
@@ -69,7 +74,9 @@ POST /api/Auth/logout        # Logout do usuário
 ```
 ### 🎬 Filmes
 ```bash
-GET /api/Movie/{title}  # Busca filme por título (integração com APIs externas)
+GET /api/Movie/{title}    # Busca filme por título (integração com APIs externas)
+GET /api/Movie/popular    # Retorna os filmes mais populares do momento
+GET /api/Movie/top-rated  # Retorna os filmes mais bem avaliados
 ```
 
 ## Informações Técnicas
